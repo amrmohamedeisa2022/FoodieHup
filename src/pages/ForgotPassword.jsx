@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useNavigate, Link } from "react-router-dom";
 import { FiMail, FiArrowLeft } from "react-icons/fi";
 import { toast } from "react-hot-toast";
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+ const location = useLocation();
+const [email, setEmail] = useState(location.state?.email || "");
   const [isLoading, setIsLoading] = useState(false);
   const [isSent, setIsSent] = useState(false);
 
@@ -15,13 +17,11 @@ export default function ForgotPassword() {
 
     try {
       // هنا سيكون اتصال مع الـ API لإرسال كود OTP
-      const response = await fetch("http://localhost:8080/api/auth/forgot-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+     const response = await fetch(
+  `http://localhost:8080/api/users/forget-password?email=${email}`,
+  {
+    method: "POST",
+  })
 
       if (response.ok) {
         setIsSent(true);

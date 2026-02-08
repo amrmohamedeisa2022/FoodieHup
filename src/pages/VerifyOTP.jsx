@@ -1,26 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../api/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function VerifyOTP() {
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
+  const email = location.state?.email;
+
+  useEffect(() => {
+    if (!email) {
+      navigate("/forgot-password");
+    }
+  }, [email, navigate]);
 
   async function handleVerify(e) {
     e.preventDefault();
 
     try {
-      const res = await api.post("/api/auth/verify-otp", { otp });
+      const res = await api.post(
+        `/api/users/verify-otp?email=${email}&otp=${otp}`
+      );
 
-      setMessage(res.data?.message || "OTP verified successfully");
+      setMessage("OTP verified successfully");
 
-      // بعد التحقق
-      navigate("/reset-password");
+      // إرسال resetToken إلى صفحة تغيير كلمة المرور
+      navigate("/reset-password", { state: { token: res.data } });
     } catch (err) {
       setMessage(
-        err?.response?.data?.message ||
-          "OTP verification failed"
+        err?.response?.data?.message || "OTP verification failed"
       );
     }
   }

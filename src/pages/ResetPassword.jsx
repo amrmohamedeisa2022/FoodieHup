@@ -6,12 +6,13 @@ import { toast } from "react-hot-toast";
 export default function ResetPassword() {
   const navigate = useNavigate();
   const location = useLocation();
-  const email = location.state?.email || "";
+  const resetToken = location.state?.token;
 
   const [form, setForm] = useState({
     password: "",
     confirmPassword: "",
   });
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,25 +23,16 @@ export default function ResetPassword() {
   };
 
   const validatePassword = (password) => {
-    if (password.length < 8) {
-      return "Password must be at least 8 characters";
-    }
-    if (!/[A-Z]/.test(password)) {
-      return "Password must contain at least one uppercase letter";
-    }
-    if (!/[a-z]/.test(password)) {
-      return "Password must contain at least one lowercase letter";
-    }
-    if (!/[0-9]/.test(password)) {
-      return "Password must contain at least one number";
-    }
+    if (password.length < 8) return "Password must be at least 8 characters";
+    if (!/[A-Z]/.test(password)) return "Password must contain at least one uppercase letter";
+    if (!/[a-z]/.test(password)) return "Password must contain at least one lowercase letter";
+    if (!/[0-9]/.test(password)) return "Password must contain at least one number";
     return null;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // التحقق من كلمة السر
     const passwordError = validatePassword(form.password);
     if (passwordError) {
       toast.error(passwordError);
@@ -55,23 +47,15 @@ export default function ResetPassword() {
     setIsLoading(true);
 
     try {
-      // هنا سيكون اتصال مع الـ API لتغيير كلمة السر
-      const response = await fetch("http://localhost:8080/api/auth/reset-password", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          newPassword: form.password,
-        }),
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/users/change-password?resetToken=${resetToken}&newPassword=${form.password}`,
+        { method: "POST" }
+      );
 
       if (response.ok) {
         setIsReset(true);
         toast.success("Password changed successfully!");
 
-        // الانتقال لصفحة Login بعد 2 ثانية
         setTimeout(() => {
           navigate("/login");
         }, 2000);
@@ -86,14 +70,9 @@ export default function ResetPassword() {
   };
 
   return (
-    <section
-      className="min-h-screen flex items-center justify-center bg-cover bg-center py-12 px-4"
-      style={{
-        backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)), url('/images/login.jpg')",
-      }}
-    >
+    <section className="min-h-screen flex items-center justify-center bg-cover bg-center py-12 px-4">
       <div className="bg-dark-elev/95 p-8 rounded-2xl w-full max-w-md shadow-2xl border border-beige/10">
+
         <button
           onClick={() => navigate(-1)}
           className="flex items-center gap-2 text-beige/70 hover:text-beige mb-6"
@@ -134,9 +113,6 @@ export default function ResetPassword() {
                 {showPassword ? <FiEyeOff /> : <FiEye />}
               </button>
             </div>
-            <p className="text-xs text-beige/50 mt-1">
-              At least 8 characters with uppercase, lowercase and numbers
-            </p>
           </div>
 
           <div>
@@ -170,15 +146,7 @@ export default function ResetPassword() {
             disabled={isLoading || isReset}
             className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2"
           >
-            {isLoading ? (
-              "Resetting..."
-            ) : isReset ? (
-              <>
-                Password Changed <FiCheck />
-              </>
-            ) : (
-              "Change Password"
-            )}
+            {isLoading ? "Resetting..." : isReset ? <>Password Changed <FiCheck /></> : "Change Password"}
           </button>
         </form>
 
@@ -188,6 +156,7 @@ export default function ResetPassword() {
             Back to Login
           </Link>
         </p>
+
       </div>
     </section>
   );

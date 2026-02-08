@@ -95,12 +95,20 @@ export default function Login() {
 
           {/* إضافة رابط Forgot Password هنا */}
           <div className="flex justify-end">
-            <Link
-              to="/forgot-password"
-              className="text-amber-500 text-sm hover:text-amber-400 transition-colors"
-            >
-              Forgot your password?
-            </Link>
+          <button
+  type="button"
+  onClick={() => {
+    if (!form.email) {
+      setErr("Please enter your email first");
+      return;
+    }
+    navigate("/forgot-password", { state: { email: form.email } });
+  }}
+  className="text-amber-500 text-sm hover:text-amber-400 transition-colors"
+>
+  Forgot your password?
+</button>
+
           </div>
 
           {err && (
