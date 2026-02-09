@@ -8,6 +8,8 @@ import {
   FiUser,
   FiSearch,
   FiChevronDown,
+  FiLogOut,
+  FiTrash2,
 } from "react-icons/fi";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
@@ -39,11 +41,22 @@ export default function Navbar() {
   function handleLogout() {
     if (logout) logout();
     localStorage.removeItem("quickeats_user");
-    alert("تم تسجيل الخروج بنجاح");
-    navigate("/");
+    navigate("/login");
     setShowUserMenu(false);
   }
 
+  function handleDeleteAccount() {
+    // مسح بيانات المستخدم من localStorage
+    localStorage.removeItem("quickeats_user");
+    localStorage.removeItem("token");
+    
+    // الانتقال مباشرة إلى صفحة Signup
+    navigate("/signup");
+    
+    // إغلاق قائمة المستخدم
+    setShowUserMenu(false);
+    setOpenMobile(false);
+  }
   
   const totalItems = items?.reduce((total, item) => total + (item.qty || 1), 0) || 0;
 
@@ -202,6 +215,15 @@ export default function Navbar() {
                 {/* User Dropdown */}
                 {showUserMenu && (
                   <div className="absolute top-full right-0 mt-2 w-48 bg-dark-primary rounded-xl shadow-lg border border-beige/20 py-2 z-10">
+                    <div className="px-4 py-2 border-b border-beige/10 mb-1">
+                      <div className="text-beige font-medium truncate">
+                        {user?.name || "User"}
+                      </div>
+                      <div className="text-xs text-beige/60 truncate">
+                        {user?.email || ""}
+                      </div>
+                    </div>
+                    
                     <Link
                       to="/profile"
                       className="flex items-center gap-2 px-4 py-2 text-beige/90 hover:bg-gold/10 hover:text-gold transition-colors"
@@ -223,9 +245,18 @@ export default function Navbar() {
                     <div className="border-t border-beige/20 my-1"></div>
 
                     <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-2 text-red-400 hover:bg-red-500/10 transition-colors"
+                      onClick={handleDeleteAccount}
+                      className="w-full text-left px-4 py-2 text-red-400 hover:bg-red-500/10 transition-colors flex items-center gap-2"
                     >
+                      <FiTrash2 className="text-red-400" />
+                      Delete Account
+                    </button>
+
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-red-400 hover:bg-red-500/10 transition-colors flex items-center gap-2"
+                    >
+                      <FiLogOut className="text-red-400" />
                       Logout
                     </button>
                   </div>
@@ -359,12 +390,21 @@ export default function Navbar() {
                   </div>
 
                   <button
+                    onClick={handleDeleteAccount}
+                    className="w-full py-3 px-4 text-red-400 font-medium rounded-xl border border-red-400/20 hover:bg-red-400/10 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <FiTrash2 className="text-red-400" />
+                    Delete Account
+                  </button>
+
+                  <button
                     onClick={() => {
                       handleLogout();
                       setOpenMobile(false);
                     }}
-                    className="w-full py-3 px-4 text-red-400 font-medium rounded-xl border border-red-400/20 hover:bg-red-400/10 transition-colors"
+                    className="w-full py-3 px-4 text-red-400 font-medium rounded-xl border border-red-400/20 hover:bg-red-400/10 transition-colors flex items-center justify-center gap-2"
                   >
+                    <FiLogOut className="text-red-400" />
                     Logout
                   </button>
                 </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import OtpVerification from "./pages/OtpVerification";
+import VerifySignupOTP from "./pages/VerifySignupOTP";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import MealDetails from "./pages/MealDetails";
@@ -18,7 +18,7 @@ import Error404 from "./pages/Error404";
 
 // إضافة صفحات نسيت كلمة السر الجديدة
 import ForgotPassword from "./pages/ForgotPassword";
-import VerifyOTP from "./pages/VerifyOTP";
+import VerifyResetOTP from "./pages/VerifyResetOTP";
 import ResetPassword from "./pages/ResetPassword";
 
 export default function AppRoutes() {
@@ -36,12 +36,14 @@ export default function AppRoutes() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/profile" element={<Profile />} />
-      <Route path="/verify-otp" element={<OtpVerification />} />
+      <Route path="/verify-signup-otp" element={<VerifySignupOTP />} />
+
 
       
       {/* إضافة مسارات نسيت كلمة السر */}
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/verify-otp" element={<VerifyOTP />} />
+      <Route path="/verify-reset-otp" element={<VerifyResetOTP />} />
+
       <Route path="/reset-password" element={<ResetPassword />} />
 
       <Route path="*" element={<Error404 />} />
