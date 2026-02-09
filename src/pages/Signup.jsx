@@ -31,8 +31,17 @@ export default function Signup() {
     }
 
     // بعد التسجيل
-    navigate("/", { replace: true });
-    setIsLoading(false);
+    // ✅ خزّن الدور مؤقتًا علشان صفحة OTP تعرف توجه فين
+localStorage.setItem(
+  "quickeats_pending_role",
+  form.role
+);
+
+// ✅ روح على صفحة OTP
+navigate("/verify-otp", { replace: true });
+
+setIsLoading(false);
+
   }
 
   return (

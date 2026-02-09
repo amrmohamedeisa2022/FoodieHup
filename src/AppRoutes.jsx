@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
+import OtpVerification from "./pages/OtpVerification";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import MealDetails from "./pages/MealDetails";
@@ -35,6 +36,8 @@ export default function AppRoutes() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/verify-otp" element={<OtpVerification />} />
+
       
       {/* إضافة مسارات نسيت كلمة السر */}
       <Route path="/forgot-password" element={<ForgotPassword />} />
