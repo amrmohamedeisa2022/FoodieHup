@@ -1,108 +1,122 @@
-import React, { useState, useEffect } from "react";
-import api from "../api/api";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { FiArrowLeft, FiKey } from "react-icons/fi";
+import { toast } from "react-hot-toast";
 
-export default function VerifyOTP() {
-  const [otp, setOtp] = useState("");
-  const [message, setMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
+export default function VerifyResetOTP() {
   const navigate = useNavigate();
   const location = useLocation();
-  const email = location.state?.email;
 
-  useEffect(() => {
-    if (!email) {
-      navigate("/forgot-password");
+  const email =
+  location.state?.email || localStorage.getItem("verify_email");
+
+
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+
+  const handleChange = (value, index) => {
+    if (!/^\d?$/.test(value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+
+    if (value && index < 5) {
+      document.getElementById(`otp-${index + 1}`)?.focus();
     }
-  }, [email, navigate]);
+  };
 
-  async function handleVerify(e) {
+  /* verify otp */
+  const handleVerify = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setMessage(null);
+
+    const code = otp.join("");
+    if (code.length !== 6) {
+      toast.error("Enter full OTP");
+      return;
+    }
 
     try {
-      const res = await api.post(
-        `/api/users/verify-otp?email=${email}&otp=${otp}`
+      const res = await fetch(
+        `http://localhost:8080/api/users/verify-otp?email=${email}&otp=${code}`,
+        { method: "POST" }
       );
 
-      setMessage("OTP verified successfully ✅");
+      if (!res.ok) throw new Error();
 
-      navigate("/reset-password", {
-        state: { token: res.data },
-      });
-    } catch (err) {
-      setMessage(
-        err?.response?.data?.message || "OTP verification failed ❌"
-      );
-    } finally {
-      setIsLoading(false);
+      const token = await res.text();
+
+      toast.success("OTP Verified");
+
+      navigate("/reset-password", { state: { token } });
+    } catch {
+      toast.error("Invalid OTP");
     }
+  };
+
+const handleResend = async () => {
+  try {
+    const res = await fetch(
+      `http://localhost:8080/api/users/resend-reset-otp?email=${email}`,
+      { method: "POST" }
+    );
+
+    if (!res.ok) throw new Error();
+
+    toast.success("OTP resent successfully");
+  } catch {
+    toast.error("Failed to resend OTP");
   }
+};
+
 
   return (
-    <section
-      className="min-h-screen flex items-center justify-center bg-cover bg-center px-4"
-      style={{
-        backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)), url('/images/login.jpg')",
-      }}
-    >
-      <div className="relative bg-dark-elev/95 p-8 rounded-2xl w-full max-w-md shadow-2xl border border-beige/10">
+    <div className="min-h-screen flex items-center justify-center bg-black px-4">
+      <div className="bg-[#0e0e0e] border border-white/10 rounded-2xl p-10 w-full max-w-md shadow-2xl text-center">
 
-        {/* 🔙 Back Button */}
-        <button
-          onClick={() => navigate(-1)}
-          className="absolute top-4 left-4 flex items-center gap-1 text-beige/70 hover:text-gold transition"
-        >
-          <FiArrowLeft />
-          Back
-        </button>
+        <h1 className="text-3xl font-bold text-white mb-2">
+          Verify Reset Code
+        </h1>
 
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-3">
-            <div className="w-14 h-14 rounded-full bg-amber-500/10 flex items-center justify-center">
-              <FiKey className="text-amber-500 text-2xl" />
-            </div>
+        <p className="text-white/60 mb-8">
+          Enter the 6-digit code sent to your email
+        </p>
+
+        <form onSubmit={handleVerify}>
+          <div className="flex justify-center gap-4 mb-8">
+            {otp.map((digit, index) => (
+              <input
+                key={index}
+                id={`otp-${index}`}
+                type="text"
+                maxLength={1}
+                value={digit}
+                onChange={(e) => handleChange(e.target.value, index)}
+                className="w-14 h-16 text-center text-2xl font-bold 
+                bg-[#111] text-white border border-white/20 rounded-xl
+                focus:outline-none focus:border-amber-500"
+              />
+            ))}
           </div>
-          <h1 className="text-2xl font-bold text-gold mb-2">
-            Verify OTP
-          </h1>
-          <p className="text-beige/70 text-sm">
-            Enter the 6-digit code sent to your email
-          </p>
-        </div>
-
-        {/* Form */}
-        <form onSubmit={handleVerify} className="space-y-6">
-          <input
-            type="text"
-            placeholder="Enter OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            maxLength={6}
-            className="w-full px-4 py-3 bg-dark-primary border border-beige/20 rounded-xl text-beige text-center tracking-[0.3em] text-lg focus:outline-none focus:border-amber-500"
-            required
-          />
-
-          {message && (
-            <div className="text-center text-sm text-red-400 bg-red-400/10 border border-red-400/20 p-3 rounded-xl">
-              {message}
-            </div>
-          )}
 
           <button
             type="submit"
-            disabled={isLoading}
-            className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 rounded-xl font-semibold transition hover:shadow-lg disabled:opacity-60"
+            className="w-full bg-gradient-to-r from-amber-500 to-orange-500
+            text-white py-4 rounded-xl font-semibold hover:scale-[1.02] transition"
           >
-            {isLoading ? "Verifying..." : "Verify OTP"}
+            Verify OTP
           </button>
         </form>
+
+        <p className="text-white/60 text-sm mt-6">
+          Didn’t receive code?{" "}
+          <button
+            onClick={handleResend}
+            className="text-amber-400 font-semibold hover:underline"
+          >
+            Resend OTP
+          </button>
+        </p>
+
       </div>
-    </section>
+    </div>
   );
 }

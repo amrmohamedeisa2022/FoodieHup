@@ -6,8 +6,8 @@ import { toast } from "react-hot-toast";
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
- const location = useLocation();
-const [email, setEmail] = useState(location.state?.email || "");
+  const location = useLocation();
+  const [email, setEmail] = useState(location.state?.email || "");
   const [isLoading, setIsLoading] = useState(false);
   const [isSent, setIsSent] = useState(false);
 
@@ -16,17 +16,23 @@ const [email, setEmail] = useState(location.state?.email || "");
     setIsLoading(true);
 
     try {
-      // هنا سيكون اتصال مع الـ API لإرسال كود OTP
-     const response = await fetch(
-  `http://localhost:8080/api/users/forget-password?email=${email}`,
-  {
-    method: "POST",
-  })
+      const response = await fetch(
+        `http://localhost:8080/api/users/forget-password?email=${email}`,
+        {
+          method: "POST",
+        }
+      );
 
       if (response.ok) {
         setIsSent(true);
         toast.success("OTP sent to your email!");
-        navigate("/verify-otp", { state: { email } });
+
+        // تخزين الإيميل مؤقتًا
+        localStorage.setItem("verify_email", email);
+
+        // ✅ الذهاب لصفحة OTP الخاصة بالـ reset
+        navigate("/verify-reset-otp", { state: { email } });
+
       } else {
         toast.error("Email not found. Please try again.");
       }
@@ -83,13 +89,11 @@ const [email, setEmail] = useState(location.state?.email || "");
             disabled={isLoading || isSent}
             className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2"
           >
-            {isLoading ? (
-              "Sending..."
-            ) : isSent ? (
-              "OTP Sent ✓"
-            ) : (
-              "Reset My Password"
-            )}
+            {isLoading
+              ? "Sending..."
+              : isSent
+              ? "OTP Sent ✓"
+              : "Reset My Password"}
           </button>
         </form>
 

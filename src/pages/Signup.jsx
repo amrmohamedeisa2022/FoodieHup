@@ -11,7 +11,7 @@ export default function Signup() {
     fullName: "",
     email: "",
     password: "",
-    role: "ROLE_CUSTOMER", 
+    role: "ROLE_CUSTOMER",
   });
 
   const [err, setErr] = useState(null);
@@ -30,18 +30,16 @@ export default function Signup() {
       return;
     }
 
-    // بعد التسجيل
-    // ✅ خزّن الدور مؤقتًا علشان صفحة OTP تعرف توجه فين
-localStorage.setItem(
-  "quickeats_pending_role",
-  form.role
-);
+    // تخزين الدور مؤقتًا
+    localStorage.setItem("quickeats_pending_role", form.role);
 
-// ✅ روح على صفحة OTP
-navigate("/verify-otp", { replace: true });
+    // تخزين الإيميل لصفحة OTP
+    localStorage.setItem("verify_email", form.email);
 
-setIsLoading(false);
+    // ✅ الانتقال لصفحة OTP الخاصة بتفعيل الحساب
+    navigate("/verify-signup-otp", { state: { email: form.email } });
 
+    setIsLoading(false);
   }
 
   return (
@@ -86,7 +84,9 @@ setIsLoading(false);
               className="w-full px-4 py-3 bg-dark-primary border border-beige/20 rounded-xl text-beige"
               placeholder="Email address"
               value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, email: e.target.value })
+              }
               required
             />
           </div>
@@ -121,7 +121,8 @@ setIsLoading(false);
               className="w-full px-4 py-3 bg-dark-primary border border-beige/20 rounded-xl text-beige"
             >
               <option value="ROLE_CUSTOMER">Customer (User)</option>
-              <option value="ROLE_RESTAURANT_OWNER">Restaurant Owner
+              <option value="ROLE_RESTAURANT_OWNER">
+                Restaurant Owner
               </option>
             </select>
           </div>

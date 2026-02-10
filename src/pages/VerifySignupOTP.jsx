@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 export default function OtpVerification() {
   const navigate = useNavigate();
@@ -12,25 +13,55 @@ export default function OtpVerification() {
     newOtp[index] = value;
     setOtp(newOtp);
 
-    // auto focus next
     if (value && index < 5) {
       document.getElementById(`otp-${index + 1}`)?.focus();
     }
   };
 
-  const handleVerify = (e) => {
+  const handleVerify = async (e) => {
     e.preventDefault();
 
     const code = otp.join("");
-    if (code.length !== 6) return alert("Enter full OTP");
+    if (code.length !== 6) {
+      toast.error("Enter full OTP");
+      return;
+    }
 
-    // ✅ مؤقت (Backend هيبقى هنا بعدين)
-    const user = JSON.parse(localStorage.getItem("quickeats_user"));
+    const email = localStorage.getItem("verify_email");
 
-    if (user?.role === "owner") {
-      navigate("/admin");
-    } else {
-      navigate("/");
+    try {
+      const res = await fetch(
+        `http://localhost:8080/api/users/activate?email=${email}&otp=${code}`,
+        { method: "POST" }
+      );
+
+      if (!res.ok) throw new Error();
+
+      toast.success("Account activated successfully");
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 1200);
+    } catch {
+      toast.error("Invalid OTP");
+    }
+  };
+
+  /* 🔥 resend otp */
+  const handleResend = async () => {
+    const email = localStorage.getItem("verify_email");
+
+    try {
+      const res = await fetch(
+        `http://localhost:8080/api/users/resend-otp?email=${email}`,
+        { method: "POST" }
+      );
+
+      if (!res.ok) throw new Error();
+
+      toast.success("OTP resent successfully");
+    } catch {
+      toast.error("Failed to resend OTP");
     }
   };
 
@@ -69,8 +100,11 @@ export default function OtpVerification() {
 
         <p className="text-center text-beige/60 text-sm mt-6">
           Didn’t receive code?{" "}
-          <button className="text-gold font-semibold hover:underline">
-            Resend
+          <button
+            onClick={handleResend}
+            className="text-gold font-semibold hover:underline"
+          >
+            ResendOTP
           </button>
         </p>
       </div>
