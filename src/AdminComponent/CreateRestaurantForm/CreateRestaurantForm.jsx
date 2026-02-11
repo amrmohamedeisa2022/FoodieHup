@@ -70,10 +70,7 @@ export default function CreateRestaurantForm() {
 
       try {
         const res = await api.post("/api/admin/restaurants", payload);
-
-        // مطعم صاحب الحساب
         dispatch(setUsersRestaurant(res.data));
-
         navigate("/admin/restaurants");
       } catch (err) {
         console.error(err);
@@ -180,6 +177,12 @@ export default function CreateRestaurantForm() {
                   value={formik.values[name]}
                   onChange={formik.handleChange}
                   sx={darkFieldStyle}
+                  InputLabelProps={{
+                    style: { color: '#cccccc' } // ✅ تأكيد لون label
+                  }}
+                  InputProps={{
+                    style: { color: 'white' } // ✅ تأكيد لون input
+                  }}
                 />
               </Grid>
             ))}
@@ -205,10 +208,38 @@ export default function CreateRestaurantForm() {
   );
 }
 
+// ✅ التعديل الكامل لـ darkFieldStyle
 const darkFieldStyle = {
+  // لون input
   "& .MuiOutlinedInput-root": {
     background: "#0f0f0f",
     color: "white",
     borderRadius: "10px",
+    "& input": {
+      color: "white",
+    },
+    "& textarea": {
+      color: "white",
+    },
+  },
+  // لون label
+  "& .MuiInputLabel-root": {
+    color: "#cccccc",
+    "&.Mui-focused": {
+      color: "#e11d48",
+    },
+  },
+  // لون border
+  "& .MuiOutlinedInput-notchedOutline": {
+    borderColor: "rgba(255,255,255,0.2)",
+  },
+  // لون border عند التركيز
+  "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+    borderColor: "#e11d48",
+  },
+  // لون placeholder
+  "& .MuiInputBase-input::placeholder": {
+    color: "#888888",
+    opacity: 1,
   },
 };
