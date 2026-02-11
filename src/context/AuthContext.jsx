@@ -22,35 +22,33 @@ export function AuthProvider({ children }) {
     else localStorage.removeItem("quickeats_user");
   }, [user]);
 
- async function signup({ fullName, email, password, role }) {
-  try {
-    const res = await api.post("/api/auth/signup", {
-      fullName,
-      email,
-      password,
-      role,
-    });
+  async function signup({ fullName, email, password, role }) {
+    try {
+      const res = await api.post("/api/auth/signup", {
+        fullName,
+        email,
+        password,
+        role,
+      });
 
-    return {
-      success: true,
-      message:
-        res.data?.message ||
-        "Account created. Please verify OTP sent to your email",
-    };
-  } catch (e) {
-    return {
-      success: false,
-      message:
-        e?.response?.data?.message ||
-        e?.message ||
-        "Signup failed, please try again",
-    };
+      return {
+        success: true,
+        message:
+          res.data?.message ||
+          "Account created. Please verify OTP sent to your email",
+      };
+    } catch (e) {
+      return {
+        success: false,
+        message:
+          e?.response?.data?.message ||
+          e?.message ||
+          "Signup failed, please try again",
+      };
+    }
   }
-}
 
-
-
-async function login({ email, password }) {
+  async function login({ email, password }) {
   try {
     const res = await api.post("/api/auth/login", { email, password });
 
@@ -62,12 +60,15 @@ async function login({ email, password }) {
 
     localStorage.setItem("quickeats_token", token);
 
-    setUser({
+    const userData = {
+      name: res.data?.fullName,
       email,
       role: res.data?.role,
-    });
+    };
 
-    return { success: true };
+    setUser(userData);
+
+    return { success: true, role: userData.role };   // 🔥 مهم
   } catch (e) {
     return {
       success: false,
@@ -78,6 +79,7 @@ async function login({ email, password }) {
     };
   }
 }
+
 
   function logout() {
     setUser(null);

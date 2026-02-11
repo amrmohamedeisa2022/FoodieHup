@@ -25,11 +25,12 @@ export default function Login() {
       return;
     }
 
+    // قراءة اليوزر بعد تسجيل الدخول
     const raw = localStorage.getItem("quickeats_user");
     const currentUser = raw ? JSON.parse(raw) : null;
 
     if (currentUser?.role === "ROLE_RESTAURANT_OWNER") {
-      navigate("/admin", { replace: true });
+      navigate("/admin/restaurants/create", { replace: true });
     } else {
       navigate("/", { replace: true });
     }
@@ -93,22 +94,20 @@ export default function Login() {
             </div>
           </div>
 
-          {/* إضافة رابط Forgot Password هنا */}
           <div className="flex justify-end">
-          <button
-  type="button"
-  onClick={() => {
-    if (!form.email) {
-      setErr("Please enter your email first");
-      return;
-    }
-    navigate("/forgot-password", { state: { email: form.email } });
-  }}
-  className="text-amber-500 text-sm hover:text-amber-400 transition-colors"
->
-  Forgot your password?
-</button>
-
+            <button
+              type="button"
+              onClick={() => {
+                if (!form.email) {
+                  setErr("Please enter your email first");
+                  return;
+                }
+                navigate("/forgot-password", { state: { email: form.email } });
+              }}
+              className="text-amber-500 text-sm hover:text-amber-400 transition-colors"
+            >
+              Forgot your password?
+            </button>
           </div>
 
           {err && (
@@ -142,5 +141,3 @@ export default function Login() {
     </section>
   );
 }
-
-//its work

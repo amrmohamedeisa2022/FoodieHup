@@ -16,10 +16,12 @@ import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 import Error404 from "./pages/Error404";
 
-// إضافة صفحات نسيت كلمة السر الجديدة
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
 import ResetPassword from "./pages/ResetPassword";
+
+import AdminRoute from "./AdminRoute";
+import CreateRestaurantForm from "./AdminComponent/CreateRestaurantForm/CreateRestaurantForm"; // 🔥 مهم
 
 export default function AppRoutes() {
   return (
@@ -38,13 +40,19 @@ export default function AppRoutes() {
       <Route path="/profile" element={<Profile />} />
       <Route path="/verify-signup-otp" element={<VerifySignupOTP />} />
 
-
-      
-      {/* إضافة مسارات نسيت كلمة السر */}
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/verify-reset-otp" element={<VerifyResetOTP />} />
-
       <Route path="/reset-password" element={<ResetPassword />} />
+
+      {/* ADMIN */}
+      <Route
+        path="/admin/restaurants/create"
+        element={
+          <AdminRoute>
+            <CreateRestaurantForm />
+          </AdminRoute>
+        }
+      />
 
       <Route path="*" element={<Error404 />} />
     </Routes>
