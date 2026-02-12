@@ -1,9 +1,19 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { setUsersRestaurant } from "../redux/slices/restaurantSlice";
+
+
+import api from "../api/api";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { FiMail, FiLock, FiArrowRight, FiEye, FiEyeOff } from "react-icons/fi";
 
 export default function Login() {
+
+
+  const dispatch = useDispatch();   
+
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -13,30 +23,42 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   async function onSubmit(e) {
-    e.preventDefault();
-    setIsLoading(true);
-    setErr(null);
+  e.preventDefault();
+  setIsLoading(true);
+  setErr(null);
 
-    const res = await login(form);
+  const res = await login(form);
 
-    if (!res.success) {
-      setErr(res.message);
-      setIsLoading(false);
-      return;
-    }
+if (!res.success) {
+  setErr(res.message);
+  setIsLoading(false);
+  return;
+}
 
-    // قراءة اليوزر بعد تسجيل الدخول
-    const raw = localStorage.getItem("quickeats_user");
-    const currentUser = raw ? JSON.parse(raw) : null;
+if (res.role === "ROLE_RESTAURANT_OWNER") {
 
-    if (currentUser?.role === "ROLE_RESTAURANT_OWNER") {
-      navigate("/admin/restaurants/create", { replace: true });
-    } else {
-      navigate("/", { replace: true });
-    }
+   if (res.hasRestaurant) {
+      navigate("/admin/restaurants");
+   } else {
+      navigate("/admin/restaurants/create");
+   }
 
-    setIsLoading(false);
-  }
+} else {   // CUSTOMER
+   navigate("/");
+}
+
+
+
+console.log("HAS RESTAURANT =", res.hasRestaurant);
+
+
+
+  setIsLoading(false);
+}
+
+
+
+
 
   return (
     <section

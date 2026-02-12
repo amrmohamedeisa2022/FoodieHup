@@ -1,7 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import VerifySignupOTP from "./pages/VerifySignupOTP";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import MealDetails from "./pages/MealDetails";
@@ -16,12 +15,13 @@ import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 import Error404 from "./pages/Error404";
 
+import VerifySignupOTP from "./pages/VerifySignupOTP";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
 import ResetPassword from "./pages/ResetPassword";
 
 import AdminRoute from "./AdminRoute";
-import CreateRestaurantForm from "./AdminComponent/CreateRestaurantForm/CreateRestaurantForm"; // 🔥 مهم
+import Admin from "./AdminComponent/Admin/Admin";
 
 export default function AppRoutes() {
   return (
@@ -44,15 +44,15 @@ export default function AppRoutes() {
       <Route path="/verify-reset-otp" element={<VerifyResetOTP />} />
       <Route path="/reset-password" element={<ResetPassword />} />
 
-      {/* ADMIN */}
-      <Route
-        path="/admin/restaurants/create"
-        element={
-          <AdminRoute>
-            <CreateRestaurantForm />
-          </AdminRoute>
-        }
-      />
+     <Route
+  path="/admin/*"
+  element={
+    <AdminRoute>
+      <Admin />
+    </AdminRoute>
+  }
+/>
+
 
       <Route path="*" element={<Error404 />} />
     </Routes>

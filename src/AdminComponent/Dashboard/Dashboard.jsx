@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Paper, Button, Divider } from "@mui/material";
-import { toggleRestaurantStatus } from "../../state/restaurant/restaurant.reducer";
+import { toggleRestaurantStatus, setUsersRestaurant } from "../../state/restaurant/restaurant.reducer";
+import api from "../../api/api";
 
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -10,9 +11,52 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 
 export const RestaurantDashboard = () => {
   const dispatch = useDispatch();
-  const { restaurant } = useSelector((store) => store);
+const data = useSelector((store) => store.restaurant.usersRestaurant);
 
-  const data = restaurant?.usersRestaurant;
+
+const handleToggleStatus = async () => {
+  try {
+    const token = localStorage.getItem("jwt");
+
+    const res = await api.put(
+      `/api/admin/restaurants/${data.id}/status`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // تحديث الريدوكس بالقيمة الجديدة القادمة من السيرفر
+    dispatch(setUsersRestaurant(res.data));
+
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+
+ useEffect(() => {
+  const loadRestaurant = async () => {
+    try {
+      const token = localStorage.getItem("jwt");
+
+      const res = await api.get("/api/admin/restaurants/user", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      dispatch(setUsersRestaurant(res.data.data ?? res.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  loadRestaurant();
+}, [dispatch]);
+
 
   if (!data) {
     return (
@@ -27,6 +71,7 @@ export const RestaurantDashboard = () => {
 
   const statusText = data.open ? "Open" : "Closed";
 
+
   return (
     <div className="min-h-screen bg-[#111] text-white p-4 lg:p-8">
       {/* Header */}
@@ -36,18 +81,19 @@ export const RestaurantDashboard = () => {
         </h1>
 
         <Button
-          variant="contained"
-          onClick={() => dispatch(toggleRestaurantStatus())}
-          sx={{
-            background: data.open ? "#ec4899" : "#22c55e",
-            fontWeight: "bold",
-            "&:hover": {
-              background: data.open ? "#db2777" : "#16a34a",
-            },
-          }}
-        >
-          {statusText}
-        </Button>
+  variant="contained"
+  onClick={handleToggleStatus}
+  sx={{
+    background: data.open ? "#ec4899" : "#22c55e",
+    fontWeight: "bold",
+    "&:hover": {
+      background: data.open ? "#db2777" : "#16a34a",
+    },
+  }}
+>
+  {statusText}
+</Button>
+
       </div>
 
       <Grid container spacing={3}>
@@ -207,6 +253,40 @@ export const RestaurantDashboard = () => {
           </Paper>
         </Grid>
       </Grid>
+      {/* Images */}
+<Grid item xs={12}>
+  <Paper
+    elevation={4}
+    sx={{
+      background: "#1b1b1b",
+      padding: "20px",
+      borderRadius: "16px",
+      border: "1px solid rgba(255,255,255,0.08)",
+      color: "white",
+    }}
+  >
+    <h2 className="text-2xl font-semibold mb-4">Images</h2>
+    <Divider sx={{ background: "rgba(255,255,255,0.12)", mb: 3 }} />
+
+    {!data?.images || data.images.length === 0 ? (
+      <p className="text-white/70">No images uploaded</p>
+    ) : (
+      <div className="flex gap-4 flex-wrap">
+        {data.images.map((img, index) => (
+          <img
+            key={index}
+            src={img}
+            alt="restaurant"
+            className="w-40 h-28 object-cover rounded-lg border border-white/10"
+          />
+        ))}
+      </div>
+    )}
+  </Paper>
+</Grid>
+
     </div>
+
+    
   );
 };

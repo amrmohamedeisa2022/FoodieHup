@@ -48,7 +48,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  async function login({ email, password }) {
+async function login({ email, password }) {
   try {
     const res = await api.post("/api/auth/login", { email, password });
 
@@ -68,7 +68,12 @@ export function AuthProvider({ children }) {
 
     setUser(userData);
 
-    return { success: true, role: userData.role };   // 🔥 مهم
+    return {
+      success: true,
+      role: res.data?.role,
+      hasRestaurant: res.data?.hasRestaurant,
+    };
+
   } catch (e) {
     return {
       success: false,
@@ -79,6 +84,8 @@ export function AuthProvider({ children }) {
     };
   }
 }
+
+
 
 
   function logout() {

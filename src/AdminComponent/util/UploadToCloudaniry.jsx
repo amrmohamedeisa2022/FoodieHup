@@ -1,18 +1,25 @@
-const upload_preset = "foody-hup";
-const cloud_name = "dpblmijx"; 
-const api_url = `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`;
+const cloud_name = "dwpos9xdo";
+const upload_preset = "quickeats_upload";
+
 
 export const uploadImageToCloudinary = async (file) => {
   const data = new FormData();
   data.append("file", file);
   data.append("upload_preset", upload_preset);
-  data.append("cloud_name", cloud_name);
 
-  const res = await fetch(api_url, {
-    method: "POST",
-    body: data,
-  });
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${cloud_name}/image/upload`,
+    {
+      method: "POST",
+      body: data,
+    }
+  );
 
   const fileData = await res.json();
-  return fileData.secure_url || fileData.url; 
+
+  if (!fileData.secure_url) {
+    throw new Error("Upload failed");
+  }
+
+  return fileData.secure_url;
 };

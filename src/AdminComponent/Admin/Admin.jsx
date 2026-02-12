@@ -17,59 +17,70 @@ import CreateMenuForm from "../Menu/CreateMenuForm";
 
 import { useSelector } from "react-redux";
 
-export const Admin = () => {
+export default function Admin() {
+
   const location = useLocation();
-  const restaurant = useSelector((store) => store.restaurant);
+const restaurantState = useSelector((store) => store.restaurant);
 
-  const hasRestaurant = !!restaurant?.usersRestaurant?.id;
+const loadingRestaurant = restaurantState.loading;
+const hasRestaurant = !!restaurantState.usersRestaurant;
 
-  
+if (loadingRestaurant) {
+  return <div className="text-white p-10">Loading...</div>;
+}
+
+if (hasRestaurant && location.pathname === "/admin/restaurants/create") {
+  return <Navigate to="/admin/restaurants" replace />;
+}
+
+
+
+
+console.log("redux usersRestaurant:", restaurantState.usersRestaurant);
+
+
+
+
   const isCreatePage = location.pathname === "/admin/restaurants/create";
 
   return (
     <div className="min-h-screen">
       <div className="lg:flex justify-between">
-        
+
         {!isCreatePage && (
           <div>
             <AdminSideBar handleClose={() => {}} />
           </div>
         )}
 
-      
         <div className={`${!isCreatePage ? "w-full lg:ml-[20vw]" : "w-full"} p-4`}>
           <Routes>
-          
-            <Route path="/restaurants/create" element={<CreateRestaurantForm />} />
 
-           
+            <Route path="restaurants/create" element={<CreateRestaurantForm />} />
+
             <Route
-              path="/*"
+              path="restaurants"
               element={
-                hasRestaurant ? (
-                  <Routes>
-                    <Route path="/restaurants" element={<RestaurantDashboard />} />
-                    <Route path="/restaurants/orders" element={<Orders />} />
-                    <Route path="/restaurants/menu" element={<Menu />} />
-                    <Route path="/restaurants/add-menu" element={<CreateMenuForm />} />
-                    <Route path="/restaurants/category" element={<FoodCategory />} />
-                    <Route path="/restaurants/ingredients" element={<Ingrediants />} />
-                    <Route path="/restaurants/event" element={<Events />} />
-                    <Route path="/restaurants/details" element={<Details />} />
-                    <Route
-                      path="/restaurants/restaurant-details"
-                      element={<RestaurantDetails />}
-                    />
-                    <Route path="*" element={<Navigate to="/admin/restaurants" replace />} />
-                  </Routes>
-                ) : (
-                  <Navigate to="/admin/restaurants/create" replace />
-                )
+                hasRestaurant
+                  ? <RestaurantDashboard />
+                  : <Navigate to="/admin/restaurants/create" replace />
               }
             />
+
+            <Route path="restaurants/orders" element={<Orders />} />
+            <Route path="restaurants/menu" element={<Menu />} />
+            <Route path="restaurants/add-menu" element={<CreateMenuForm />} />
+            <Route path="restaurants/category" element={<FoodCategory />} />
+            <Route path="restaurants/ingredients" element={<Ingrediants />} />
+            <Route path="restaurants/event" element={<Events />} />
+            <Route path="restaurants/details" element={<Details />} />
+            <Route path="restaurants/restaurant-details" element={<RestaurantDetails />} />
+
+            <Route path="*" element={<Navigate to="restaurants" replace />} />
+
           </Routes>
         </div>
       </div>
     </div>
   );
-};
+}
