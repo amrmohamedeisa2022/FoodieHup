@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import { fetchAllRestaurants } from "../../state/restaurant/restaurant.action";
-
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import CloseIcon from "@mui/icons-material/Close";
@@ -51,7 +51,6 @@ export default function CreateRestaurantForm() {
         description: values.description,
         cuisineType: values.cuisineType,
         openingHours: values.openingHour,
-
         address: {
           streetAddress: values.streetAddress,
           city: values.city,
@@ -59,35 +58,25 @@ export default function CreateRestaurantForm() {
           postalCode: values.PostalCode,
           country: values.country,
         },
-
         contactInformation: {
           email: values.email,
           mobile: values.mobile,
           twitter: values.twitter,
           instagram: values.instagram,
         },
-
         images: values.images,
       };
 
       try {
         const token = localStorage.getItem("quickeats_token");
 
+        const res = await api.post("/api/admin/restaurants", payload, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-        const res = await api.post(
-          "/api/admin/restaurants",
-          payload,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-       dispatch(setUsersRestaurant(res.data));
-dispatch(fetchAllRestaurants());   // ⭐ مهم
-navigate("/admin/restaurants", { replace: true });
-
+        dispatch(setUsersRestaurant(res.data));
+        dispatch(fetchAllRestaurants());
+        navigate("/admin/restaurants", { replace: true });
 
       } catch (err) {
         console.log(err);
@@ -97,31 +86,24 @@ navigate("/admin/restaurants", { replace: true });
   });
 
   const handleImageChange = async (e) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  setUploadImage(true);
-  try {
-    const uploadedUrl = await uploadImageToCloudinary(file);
+    setUploadImage(true);
+    try {
+      const uploadedUrl = await uploadImageToCloudinary(file);
 
-    if (!uploadedUrl) {
-      throw new Error("Upload failed");
+      formik.setFieldValue("images", [
+        ...formik.values.images,
+        uploadedUrl,
+      ]);
+    } catch (err) {
+      console.log(err);
+      alert("Image upload failed ❌");
+    } finally {
+      setUploadImage(false);
     }
-
-    formik.setFieldValue("images", [
-      ...formik.values.images,
-      uploadedUrl,
-    ]);
-
-  } catch (err) {
-    console.log(err);
-    alert("Image upload failed ❌");
-  } finally {
-    setUploadImage(false);
-  }
-};
-
-
+  };
 
   const handleRemoveImage = (index) => {
     const updatedImages = [...formik.values.images];
@@ -132,7 +114,24 @@ navigate("/admin/restaurants", { replace: true });
   return (
     <div className="min-h-screen bg-[#0b0b0b] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-4xl bg-[#111] border border-white/10 rounded-2xl p-6 md:p-10">
-        <h1 className="text-white text-2xl font-bold mb-6">Create Restaurant</h1>
+
+        {/* Header with Back Arrow */}
+        <div className="flex items-center gap-3 mb-6">
+          <IconButton
+            onClick={() => navigate("/login")}
+            sx={{
+              background: "rgba(255,255,255,0.06)",
+              color: "white",
+              "&:hover": { background: "rgba(255,255,255,0.12)" },
+            }}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+
+          <h1 className="text-white text-2xl font-bold">
+            Create Restaurant
+          </h1>
+        </div>
 
         <form onSubmit={formik.handleSubmit} className="space-y-6">
 
@@ -263,21 +262,10 @@ const darkFieldStyle = {
     background: "#0f0f0f",
     color: "white",
     borderRadius: "10px",
-    "& fieldset": {
-      borderColor: "rgba(255,255,255,0.2)",
-    },
-    "&:hover fieldset": {
-      borderColor: "rgba(255,255,255,0.35)",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#e11d48",
-      borderWidth: "2px",
-    },
+    "& fieldset": { borderColor: "rgba(255,255,255,0.2)" },
+    "&:hover fieldset": { borderColor: "rgba(255,255,255,0.35)" },
+    "&.Mui-focused fieldset": { borderColor: "#e11d48", borderWidth: "2px" },
   },
-  "& .MuiInputLabel-root": {
-    color: "rgba(255,255,255,0.7)",
-  },
-  "& .MuiInputLabel-root.Mui-focused": {
-    color: "#e11d48",
-  },
+  "& .MuiInputLabel-root": { color: "rgba(255,255,255,0.7)" },
+  "& .MuiInputLabel-root.Mui-focused": { color: "#e11d48" },
 };

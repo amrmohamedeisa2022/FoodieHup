@@ -20,6 +20,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
 import ResetPassword from "./pages/ResetPassword";
 
+import Restaurants from "./pages/Restaurants";   // ⭐ added
+
 import AdminRoute from "./AdminRoute";
 import Admin from "./AdminComponent/Admin/Admin";
 
@@ -38,21 +40,24 @@ export default function AppRoutes() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/profile" element={<Profile />} />
+
+      {/* ⭐ Restaurants user page */}
+      <Route path="/restaurants" element={<Restaurants />} />
+
       <Route path="/verify-signup-otp" element={<VerifySignupOTP />} />
 
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/verify-reset-otp" element={<VerifyResetOTP />} />
       <Route path="/reset-password" element={<ResetPassword />} />
 
-     <Route
-  path="/admin/*"
-  element={
-    <AdminRoute>
-      <Admin />
-    </AdminRoute>
-  }
-/>
-
+      <Route
+        path="/admin/*"
+        element={
+          <AdminRoute>
+            <Admin />
+          </AdminRoute>
+        }
+      />
 
       <Route path="*" element={<Error404 />} />
     </Routes>

@@ -37,15 +37,32 @@ if (!res.success) {
 
 if (res.role === "ROLE_RESTAURANT_OWNER") {
 
-   if (res.hasRestaurant) {
-      navigate("/admin/restaurants");
-   } else {
-      navigate("/admin/restaurants/create");
-   }
+  if (res.hasRestaurant) {
 
-} else {   // CUSTOMER
-   navigate("/");
+    try {
+      const restaurantRes =
+        await api.get("/api/admin/restaurants/user");
+
+      dispatch(setUsersRestaurant(restaurantRes.data));
+
+      navigate("/admin/restaurants");
+
+    } catch (err) {
+      console.log(err);
+      setErr("Failed to load restaurant");
+    }
+
+  } else {
+    dispatch(setUsersRestaurant(null));
+    navigate("/admin/restaurants/create");
+  }
+
+} else {
+  // ⭐ customer عادي
+  navigate("/");     // أو /home أو /restaurants حسب مشروعك
 }
+
+
 
 
 
