@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Palette */
+
 :root {
   --dark-primary: #2C2C2C;
   --dark-elev: #36454F;
@@ -19,7 +19,7 @@ body {
   color: var(--beige);
 }
 
-/* Buttons */
+
 .btn-primary {
   @apply px-4 py-2 rounded-md font-semibold text-white shadow-md transition-all duration-300;
   background-color: var(--cta);
@@ -45,7 +45,7 @@ body {
   background-color: var(--gold);
 }
 
-/* Badges, cards, inputs */
+
 .badge { @apply px-3 py-1 rounded-full text-xs font-medium; background: rgba(54,69,79,0.6); color: rgba(240,229,216,0.95); }
 
 .food-card {

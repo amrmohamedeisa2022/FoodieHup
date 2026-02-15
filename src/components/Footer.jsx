@@ -15,9 +15,9 @@ export default function Footer() {
   return (
     <footer className="bg-dark-primary py-16 text-beige/70 border-t border-beige/10">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Main Footer Content */}
+        
         <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-8 mb-12">
-          {/* Brand Section */}
+        
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-r from-amber-500 to-orange-500 rounded-lg flex items-center justify-center">
@@ -30,7 +30,7 @@ export default function Footer() {
               your door.
             </p>
 
-            {/* Business Hours */}
+            
             <div className="space-y-3 pt-4">
               <h4 className="text-lg font-semibold text-beige flex items-center gap-2">
                 <FiClock className="text-amber-500" />
@@ -49,7 +49,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
+          
           <div className="space-y-6">
             <h4 className="text-xl font-semibold text-beige">Quick Links</h4>
             <div className="flex flex-col gap-4 text-lg">
@@ -80,7 +80,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Contact Info */}
+          
           <div className="space-y-6">
             <h4 className="text-xl font-semibold text-beige">Contact Us</h4>
             <div className="space-y-4 text-beige/60 text-lg">
@@ -99,7 +99,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Social Links & Newsletter */}
+          
           <div className="space-y-6">
             <h4 className="text-xl font-semibold text-beige">Follow Us</h4>
 
@@ -141,7 +141,7 @@ export default function Footer() {
               </a>
             </div>
 
-            {/* Quick Info Cards */}
+            
             <div className="space-y-4 pt-4">
               <div className="bg-dark-elev/50 rounded-xl p-4 border border-beige/10 text-center">
                 <div className="text-amber-500 font-semibold text-lg mb-1">
@@ -157,7 +157,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        
         <div className="pt-8 border-t border-beige/20 flex flex-col lg:flex-row justify-between items-center">
           <div className="text-beige/60 text-lg">
             © {new Date().getFullYear()} QuickEats. All rights reserved.

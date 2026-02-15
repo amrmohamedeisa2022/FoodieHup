@@ -10,7 +10,7 @@ export default function Checkout() {
 
   function submit(e) {
     e.preventDefault();
-    // mock submit
+    
     alert("Order placed successfully! 🎉\nYour delicious food is on the way!");
     clearCart();
     navigate("/");
@@ -30,7 +30,7 @@ export default function Checkout() {
       <Navbar />
       <section className="min-h-screen bg-gradient-to-b from-dark-primary to-dark-elev py-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Header */}
+          
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gold mb-4 flex items-center justify-center gap-3">
               <FiCreditCard className="text-amber-500" />
@@ -42,7 +42,7 @@ export default function Checkout() {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            {/* Left Column - Form */}
+            
             <div className="space-y-6">
               <div className="bg-dark-elev rounded-2xl p-6 border border-beige/10">
                 <h2 className="text-2xl font-bold text-beige mb-6 flex items-center gap-3">
@@ -100,7 +100,7 @@ export default function Checkout() {
                     </div>
                   </div>
 
-                  {/* Payment Method */}
+                  
                   <div className="space-y-4">
                     <h3 className="text-xl font-semibold text-beige">Payment Method</h3>
                     <div className="space-y-3">
@@ -125,7 +125,7 @@ export default function Checkout() {
                 </form>
               </div>
 
-              {/* Back to Cart Button */}
+              
               <button 
                 onClick={handleBackToCart}
                 className="w-full bg-dark-primary border border-beige/20 text-beige py-3 rounded-xl font-medium hover:border-gold hover:text-gold transition-all duration-200 flex items-center justify-center gap-2"
@@ -135,7 +135,7 @@ export default function Checkout() {
               </button>
             </div>
 
-            {/* Right Column - Order Summary */}
+            
             <div className="space-y-6">
               <div className="bg-dark-elev rounded-2xl p-6 border border-beige/10 sticky top-6">
                 <h2 className="text-2xl font-bold text-beige mb-6 flex items-center gap-3">
@@ -143,7 +143,7 @@ export default function Checkout() {
                   Order Summary
                 </h2>
 
-                {/* Order Items */}
+                
                 <div className="space-y-4 mb-6">
                   <h3 className="text-lg font-semibold text-beige">Items ({items.length})</h3>
                   <div className="space-y-3 max-h-60 overflow-auto">
@@ -169,7 +169,7 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                {/* Price Breakdown */}
+                
                 <div className="space-y-3 border-t border-beige/20 pt-4">
                   <div className="flex justify-between text-beige/60">
                     <span>Subtotal</span>
@@ -191,7 +191,7 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                {/* Delivery Info */}
+                
                 <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
                   <div className="flex items-center gap-2 text-amber-500 font-semibold mb-2">
                     <FiMapPin className="text-sm" />

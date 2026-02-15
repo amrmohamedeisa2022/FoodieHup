@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  usersRestaurant: null,     // مطعم صاحب الحساب
-  allRestaurants: [],        // مطاعم اليوزر
+  usersRestaurant: null,     
+  allRestaurants: [],        
   categories: [],
 };
 

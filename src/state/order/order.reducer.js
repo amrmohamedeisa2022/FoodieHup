@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  orders: [], // ✅ مفيش داتا ثابتة
+  orders: [], 
 };
 
 const orderSlice = createSlice({

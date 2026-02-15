@@ -58,8 +58,8 @@ if (res.role === "ROLE_RESTAURANT_OWNER") {
   }
 
 } else {
-  // ⭐ customer عادي
-  navigate("/");     // أو /home أو /restaurants حسب مشروعك
+  
+  navigate("/");
 }
 
 

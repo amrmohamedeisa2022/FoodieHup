@@ -1,5 +1,5 @@
 import React from "react";
-import orders from "../data/orders"; // if you have it; else create a small mock file
+import orders from "../data/orders"; 
 
 export default function Orders(){
   return (

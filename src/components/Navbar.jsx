@@ -21,7 +21,7 @@ export default function Navbar() {
   const [activeLink, setActiveLink] = useState("/");
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  // NEW
+  
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
@@ -196,7 +196,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* DELETE MODAL */}
+      
       {showDeleteModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[999]">
           <div className="bg-dark-primary p-8 rounded-2xl text-center">
@@ -222,7 +222,7 @@ export default function Navbar() {
         </div>
       )}
 
-      {/* LOGOUT MODAL */}
+      
       {showLogoutModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-[999]">
           <div className="bg-dark-primary p-8 rounded-2xl text-center">

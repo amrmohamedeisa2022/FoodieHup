@@ -8,7 +8,7 @@ export default function About() {
       <Navbar />
       <section className="min-h-screen bg-gradient-to-b from-dark-primary to-dark-elev py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Header Section */}
+          
           <div className="text-center mb-16">
             <h1 className="text-5xl font-bold text-gold mb-6">About QuickEats</h1>
             <p className="text-beige/70 text-xl max-w-3xl mx-auto leading-relaxed">
@@ -17,9 +17,9 @@ export default function About() {
             </p>
           </div>
 
-          {/* Main Content */}
+          
           <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
-            {/* Text Content */}
+            
             <div className="space-y-8">
               <div>
                 <h2 className="text-4xl font-bold text-gold mb-6 leading-tight">
@@ -37,7 +37,7 @@ export default function About() {
                 </p>
               </div>
 
-              {/* Features List */}
+              
               <div className="space-y-4">
                 <div className="flex items-center gap-4 p-4 bg-dark-elev/50 rounded-xl border border-beige/10">
                   <div className="w-12 h-12 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center">
@@ -83,7 +83,7 @@ export default function About() {
               </div>
             </div>
 
-            {/* Image */}
+            
             <div className="relative">
               <img
                 src="/images/chef.jpg"
@@ -97,7 +97,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* Stats Section */}
+          
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
             <div className="text-center">
               <div className="text-4xl font-bold text-gold mb-2">50K+</div>
@@ -117,7 +117,7 @@ export default function About() {
             </div>
           </div>
 
-          {/* Mission Section */}
+          
           <div className="bg-dark-elev rounded-2xl p-8 md:p-12 text-center border border-beige/10">
             <h2 className="text-3xl font-bold text-gold mb-6">Our Mission</h2>
             <p className="text-beige/80 text-lg leading-relaxed max-w-4xl mx-auto">

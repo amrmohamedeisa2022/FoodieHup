@@ -41,7 +41,7 @@ export default function AppRoutes() {
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/profile" element={<Profile />} />
 
-      {/* ⭐ Restaurants user page */}
+      
       <Route path="/restaurants" element={<Restaurants />} />
 
       <Route path="/verify-signup-otp" element={<VerifySignupOTP />} />

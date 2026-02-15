@@ -22,7 +22,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-// ✅ Redux Action
+
 import {
   deleteFoodAction,
   getMenuItemsByRestaurantId,
@@ -35,7 +35,7 @@ export default function MenuTable() {
   const restaurant = useSelector((store) => store.restaurant);
   const menu = useSelector((store) => store.menu);
 
-  // ✅ تحميل المنيو أول ما الصفحة تفتح + يجيب بتاع المطعم الحالي بس
+  
   useEffect(() => {
     const restaurantId = restaurant?.usersRestaurant?.id;
     if (!restaurantId) return;

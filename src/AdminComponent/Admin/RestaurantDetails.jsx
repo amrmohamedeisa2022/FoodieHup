@@ -98,35 +98,35 @@ export const RestaurantDetails = () => {
                 <div className="flex items-center gap-3 flex-wrap">
                   <span className="w-48 font-semibold">Social</span>
 
-                  {/* ✅ Instagram */}
+                  
                   {instagramLink && (
                     <a href={instagramLink} target="_blank" rel="noreferrer">
                       <InstagramIcon />
                     </a>
                   )}
 
-                  {/* ✅ Twitter */}
+                  
                   {twitterLink && (
                     <a href={twitterLink} target="_blank" rel="noreferrer">
                       <TwitterIcon />
                     </a>
                   )}
 
-                  {/* ✅ LinkedIn (لو موجود) */}
+                  
                   {linkedInLink && (
                     <a href={linkedInLink} target="_blank" rel="noreferrer">
                       <LinkedInIcon />
                     </a>
                   )}
 
-                  {/* ✅ Facebook (لو موجود) */}
+                  
                   {facebookLink && (
                     <a href={facebookLink} target="_blank" rel="noreferrer">
                       <FacebookIcon />
                     </a>
                   )}
 
-                  {/* ✅ لو مفيش أي لينكات */}
+                  
                   {!instagramLink && !twitterLink && !linkedInLink && !facebookLink && (
                     <span className="text-gray-500">No social links</span>
                   )}

@@ -16,14 +16,14 @@ export default function CartPage(){
     navigate("/menu");
   };
 
-  // دالة لحساب السعر الإجمالي لكل عنصر
+  
   const calculateItemTotal = (price, quantity) => {
     const itemPrice = parseFloat(price) || 0;
     const itemQty = parseInt(quantity) || 0;
     return (itemPrice * itemQty).toFixed(2);
   };
 
-  // دالة للتأكد من أن السعر صحيح
+  
   const getValidPrice = (price) => {
     return parseFloat(price) || 0;
   };
@@ -64,12 +64,12 @@ export default function CartPage(){
             </div>
           ) : (
             <div className="grid lg:grid-cols-3 gap-8">
-              {/* Cart Items */}
+              
               <div className="lg:col-span-2 space-y-4">
                 {items.map(it => (
                   <div key={it.id} className="bg-dark-elev rounded-2xl p-6 border border-beige/10 hover:border-amber-500/30 transition-all duration-300">
                     <div className="flex gap-6">
-                      {/* Product Image */}
+                      
                       <img 
                         src={it.image} 
                         className="w-20 h-20 md:w-24 md:h-24 object-cover rounded-xl flex-shrink-0" 
@@ -79,7 +79,7 @@ export default function CartPage(){
                         }}
                       />
                       
-                      {/* Product Details */}
+                      
                       <div className="flex-1 min-w-0">
                         <div className="flex justify-between items-start mb-2">
                           <h3 className="text-lg font-bold text-beige truncate">{it.name}</h3>
@@ -95,7 +95,7 @@ export default function CartPage(){
                           {getValidPrice(it.price).toFixed(2)} EGP
                         </div>
 
-                        {/* Quantity Controls */}
+                        
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
                             <button 
@@ -128,7 +128,7 @@ export default function CartPage(){
                 ))}
               </div>
 
-              {/* Order Summary */}
+              
               <div className="lg:col-span-1">
                 <div className="bg-dark-elev rounded-2xl p-6 border border-beige/10 sticky top-6">
                   <h3 className="text-xl font-bold text-beige mb-6">Order Summary</h3>

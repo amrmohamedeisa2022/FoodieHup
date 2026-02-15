@@ -164,7 +164,7 @@ export const AdminSideBar = ({ handleClose }) => {
         </DialogActions>
       </Dialog>
 
-      {/* Delete Account Dialog */}
+      
       <Dialog open={deleteOpen} onClose={() => setDeleteOpen(false)}>
         <DialogTitle>Delete Account</DialogTitle>
         <DialogContent>

@@ -7,11 +7,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // 🎨 لوحة الألوان المتفق عليها
-        'dark-primary': '#2C2C2C',    // الخلفية الداكنة
-        'beige': '#F0E5D8',           // النصوص والعناصر الفاتحة
-        'cta': '#FF5722',             // الأزرار والعناصر الحيوية
-        'secondary': '#FFD700',       // ذهبي خفيف
+        
+        'dark-primary': '#2C2C2C',    
+        'beige': '#F0E5D8',           
+        'cta': '#FF5722',             
+        'secondary': '#FFD700',       
       },
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
