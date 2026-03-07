@@ -30,13 +30,13 @@ export default function Signup() {
       return;
     }
 
-    // تخزين الدور مؤقتًا
+    
     localStorage.setItem("quickeats_pending_role", form.role);
 
-    // تخزين الإيميل لصفحة OTP
+    
     localStorage.setItem("verify_email", form.email);
 
-    // ✅ الانتقال لصفحة OTP الخاصة بتفعيل الحساب
+    
     navigate("/verify-signup-otp", { state: { email: form.email } });
 
     setIsLoading(false);

@@ -11,7 +11,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { FavoritesProvider } from "./context/FavoritesContext";
 import { BrowserRouter } from "react-router-dom";
 
-// إضافة Toaster
+
 import { Toaster } from "react-hot-toast";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -23,7 +23,7 @@ root.render(
         <AuthProvider>
           <CartProvider>
             <FavoritesProvider>
-              {/* إضافة Toaster هنا */}
+              
               <Toaster 
                 position="top-right"
                 toastOptions={{

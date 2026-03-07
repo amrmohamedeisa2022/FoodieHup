@@ -47,7 +47,7 @@ export default function OtpVerification() {
     }
   };
 
-  /* 🔥 resend otp */
+  
   const handleResend = async () => {
     const email = localStorage.getItem("verify_email");
 

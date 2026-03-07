@@ -1,4 +1,4 @@
-// src/state/menu/menu.action.js
+
 
 export const GET_MENU_ITEMS_REQUEST = "menu/GET_MENU_ITEMS_REQUEST";
 export const GET_MENU_ITEMS_REQUEST_SUCCESS =
@@ -14,10 +14,10 @@ export const CREATE_MENU_ITEM_REQUEST = "menu/CREATE_MENU_ITEM_REQUEST";
 export const CREATE_MENU_ITEM_SUCCESS = "menu/CREATE_MENU_ITEM_SUCCESS";
 export const CREATE_MENU_ITEM_FAILURE = "menu/CREATE_MENU_ITEM_FAILURE";
 
-// ✅ Storage Key
+
 const MENU_STORAGE_KEY = "quickeats_menu_items";
 
-// ✅ helpers
+
 const loadMenuFromStorage = () => {
   try {
     const saved = localStorage.getItem(MENU_STORAGE_KEY);
@@ -33,7 +33,7 @@ const saveMenuToStorage = (items) => {
   } catch {}
 };
 
-// ✅ Get Menu Items
+
 export const getMenuItemsByRestaurantId = ({ restaurantId }) => async (dispatch) => {
   try {
     dispatch({ type: GET_MENU_ITEMS_REQUEST });
@@ -41,7 +41,7 @@ export const getMenuItemsByRestaurantId = ({ restaurantId }) => async (dispatch)
     setTimeout(() => {
       const items = loadMenuFromStorage();
 
-      // ✅ لو عايز تربط الأكلات بالمطعم نفسه
+     
       const filtered = items.filter(
         (x) => String(x.restaurantId) === String(restaurantId)
       );
@@ -59,7 +59,7 @@ export const getMenuItemsByRestaurantId = ({ restaurantId }) => async (dispatch)
   }
 };
 
-// ✅ Delete Menu Item
+
 export const deleteFoodAction = ({ foodId }) => async (dispatch, getState) => {
   try {
     dispatch({ type: DELETE_MENU_ITEM_REQUEST });
@@ -70,7 +70,7 @@ export const deleteFoodAction = ({ foodId }) => async (dispatch, getState) => {
         payload: foodId,
       });
 
-      // ✅ احفظ بعد المسح
+     
       const updated = getState().menu.menuItems.filter((x) => x.id !== foodId);
       saveMenuToStorage(updated);
     }, 100);
@@ -82,7 +82,7 @@ export const deleteFoodAction = ({ foodId }) => async (dispatch, getState) => {
   }
 };
 
-// ✅ Create Menu Item
+
 export const createMenuItem = ({ menu }) => async (dispatch, getState) => {
   try {
     dispatch({ type: CREATE_MENU_ITEM_REQUEST });
@@ -100,7 +100,7 @@ export const createMenuItem = ({ menu }) => async (dispatch, getState) => {
         payload: newItem,
       });
 
-      // ✅ احفظ في localStorage (مع الموجود)
+     
       const current = loadMenuFromStorage();
       const updated = [newItem, ...current];
       saveMenuToStorage(updated);

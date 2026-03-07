@@ -19,15 +19,15 @@ export default function Profile() {
       <Navbar />
       <section className="min-h-screen bg-gradient-to-b from-dark-primary to-dark-elev py-20 px-4 sm:px-6">
         <div className="max-w-2xl mx-auto">
-          {/* Header Section */}
+          
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gold mb-4">My Profile</h1>
             <p className="text-beige/70 text-lg">Manage your account information</p>
           </div>
 
-          {/* Profile Card */}
+          
           <div className="bg-dark-elev rounded-2xl shadow-xl border border-beige/10 overflow-hidden">
-            {/* Profile Header */}
+            
             <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 p-6 border-b border-beige/10">
               <div className="flex items-center gap-4">
                 <div className="w-20 h-20 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg">
@@ -43,9 +43,9 @@ export default function Profile() {
               </div>
             </div>
 
-            {/* Profile Details */}
+            
             <div className="p-6 space-y-6">
-              {/* Personal Information */}
+              
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-gold border-b border-beige/20 pb-2 flex items-center gap-2">
                   <FiUser className="text-lg" />
@@ -68,7 +68,7 @@ export default function Profile() {
                 </div>
               </div>
 
-              {/* Account Stats */}
+              
               <div className="space-y-4">
                 <h3 className="text-xl font-semibold text-gold border-b border-beige/20 pb-2">
                   Account Statistics
@@ -97,7 +97,7 @@ export default function Profile() {
                 </div>
               </div>
 
-              {/* Logout Button Only */}
+              
               <div className="pt-4">
                 <button 
                   className="w-full flex items-center justify-center gap-2 bg-dark-primary border border-red-400/30 text-red-400 py-3 px-6 rounded-xl font-medium hover:bg-red-400/10 transition-all duration-300 hover:scale-105"

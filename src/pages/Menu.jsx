@@ -20,13 +20,13 @@ export default function Menu({ hideNavbar = false }) {
   const { addItem } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
 
-  // ✅ أول ما الصفحة تفتح: هات أكلات الأدمن من redux
+  
   useEffect(() => {
     const restaurantId = restaurant?.usersRestaurant?.id || 1;
     dispatch(getMenuItemsByRestaurantId({ restaurantId }));
   }, [dispatch, restaurant?.usersRestaurant?.id]);
 
-  // ✅ تحويل أكلات الأدمن لشكل mealsData
+  
   const adminMeals = useMemo(() => {
     return (menu?.menuItems || []).map((item) => ({
       id: item.id,
@@ -41,12 +41,12 @@ export default function Menu({ hideNavbar = false }) {
     }));
   }, [menu?.menuItems]);
 
-  // ✅ دمج أكلات الأدمن + أكلات الموقع الأساسية
+  
   const updatedMealsData = useMemo(() => {
     return [...adminMeals, ...(mealsData || [])];
   }, [adminMeals]);
 
-  // ✅ normalize categories
+  
   const normalizeCategory = (cat) => {
     if (!cat) return "Other";
     const c = cat.toLowerCase();
@@ -66,7 +66,7 @@ export default function Menu({ hideNavbar = false }) {
     return ["All", ...new Set(normalizedMealsData.map((m) => m.normalizedCategory))];
   }, [normalizedMealsData]);
 
-  // ✅ filtering
+  
   const filteredMeals = useMemo(() => {
     let filtered = normalizedMealsData;
 
@@ -88,7 +88,7 @@ export default function Menu({ hideNavbar = false }) {
   }, [filteredMeals, visibleCount]);
 
   useEffect(() => {
-    // ✅ لما نغير فلتر او بحث يبدأ من الأول
+    
     setVisibleCount(8);
   }, [category, search]);
 
@@ -109,7 +109,7 @@ export default function Menu({ hideNavbar = false }) {
             </p>
           </div>
 
-          {/* Search & Filter */}
+          
           <div className="flex flex-col lg:flex-row gap-4 mb-12">
             <div className="flex-1 relative">
               <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-beige/60 text-xl" />
@@ -146,7 +146,7 @@ export default function Menu({ hideNavbar = false }) {
             </p>
           </div>
 
-          {/* Meals Grid */}
+          
           {displayedMeals.length === 0 ? (
             <div className="text-center py-16">
               <h3 className="text-2xl font-semibold text-beige mb-3">No meals found</h3>
@@ -235,7 +235,7 @@ export default function Menu({ hideNavbar = false }) {
             </div>
           )}
 
-          {/* Load More */}
+          
           {canLoadMore && (
             <div className="text-center mt-12">
               <button

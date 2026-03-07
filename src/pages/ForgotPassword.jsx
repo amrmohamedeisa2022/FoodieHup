@@ -27,10 +27,10 @@ export default function ForgotPassword() {
         setIsSent(true);
         toast.success("OTP sent to your email!");
 
-        // تخزين الإيميل مؤقتًا
+        
         localStorage.setItem("verify_email", email);
 
-        // ✅ الذهاب لصفحة OTP الخاصة بالـ reset
+        
         navigate("/verify-reset-otp", { state: { email } });
 
       } else {

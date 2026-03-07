@@ -11,7 +11,7 @@ export default function Favorites() {
 
   const handleAddToCart = (meal) => {
     addItem(meal);
-    // Optional: Show a success message
+    
   };
 
   return (
@@ -19,7 +19,7 @@ export default function Favorites() {
       <Navbar />
       <section className="min-h-screen bg-gradient-to-b from-dark-primary to-dark-elev py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Header */}
+          
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-gold mb-4 flex items-center justify-center gap-3">
               <FiHeart className="text-amber-500" />
@@ -32,7 +32,7 @@ export default function Favorites() {
             </p>
           </div>
 
-          {/* Favorites Grid */}
+          
           {favorites.length === 0 ? (
             <div className="text-center py-16">
               <div className="w-24 h-24 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -56,7 +56,7 @@ export default function Favorites() {
                   key={meal.id}
                   className="group bg-dark-elev rounded-2xl overflow-hidden border border-beige/10 hover:border-amber-500/30 transition-all duration-300 hover:shadow-xl"
                 >
-                  {/* Image Container */}
+                  
                   <div className="relative overflow-hidden">
                     <img
                       src={meal.image || "/api/placeholder/300/200"}
@@ -64,7 +64,7 @@ export default function Favorites() {
                       className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     
-                    {/* Favorite Button */}
+                    
                     <button
                       onClick={() => toggleFavorite(meal)}
                       className="absolute top-3 right-3 w-10 h-10 bg-dark-primary/80 backdrop-blur-sm rounded-full flex items-center justify-center text-amber-500 hover:bg-amber-500 hover:text-white transition-all duration-300"
@@ -72,20 +72,20 @@ export default function Favorites() {
                       <FiHeart className="text-lg fill-current" />
                     </button>
 
-                    {/* Time Badge */}
+                    
                     <div className="absolute top-3 left-3 bg-dark-primary/80 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1 text-beige/90 text-sm">
                       <FiClock className="text-amber-500" />
                       {meal.time}
                     </div>
                   </div>
 
-                  {/* Content */}
+                  
                   <div className="p-4">
                     <h3 className="text-lg font-bold text-beige mb-2 line-clamp-1">
                       {meal.name}
                     </h3>
 
-                    {/* Rating and Price */}
+                    
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-1 text-amber-500">
                         <FiStar className="fill-current" />
@@ -98,7 +98,7 @@ export default function Favorites() {
                       )}
                     </div>
 
-                    {/* Add to Cart Button */}
+                    
                     <button
                       onClick={() => handleAddToCart(meal)}
                       className="w-full bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 rounded-xl font-medium flex items-center justify-center gap-2 hover:shadow-lg hover:scale-105 transition-all duration-300"
@@ -112,7 +112,7 @@ export default function Favorites() {
             </div>
           )}
 
-          {/* Quick Actions */}
+          
           {favorites.length > 0 && (
             <div className="mt-12 text-center">
               <div className="inline-flex flex-col sm:flex-row gap-4 bg-dark-elev/50 rounded-2xl p-6 border border-beige/10">

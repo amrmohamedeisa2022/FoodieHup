@@ -7,7 +7,7 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Mock form submission
+    
     alert("Message sent! We'll get back to you soon.");
     setForm({ name: "", email: "", message: "" });
   };
@@ -21,7 +21,7 @@ export default function Contact() {
       <Navbar />
       <section className="min-h-screen bg-gradient-to-b from-dark-primary to-dark-elev py-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Header Section */}
+          
           <div className="text-center mb-16">
             <h1 className="text-5xl font-bold text-gold mb-6">Contact Us</h1>
             <p className="text-beige/70 text-xl max-w-2xl mx-auto leading-relaxed">
@@ -30,7 +30,7 @@ export default function Contact() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Contact Information */}
+            
             <div className="lg:col-span-1 space-y-6">
               <div className="bg-dark-elev rounded-2xl p-6 border border-beige/10">
                 <h3 className="text-2xl font-bold text-gold mb-6">Get in Touch</h3>
@@ -67,7 +67,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Business Hours */}
+                
                 <div className="mt-8 pt-6 border-t border-beige/20">
                   <h4 className="text-beige font-semibold mb-3">Business Hours</h4>
                   <div className="space-y-2 text-sm text-beige/60">
@@ -84,7 +84,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Contact Form */}
+            
             <div className="lg:col-span-2">
               <div className="bg-dark-elev rounded-2xl p-8 border border-beige/10">
                 <h3 className="text-2xl font-bold text-gold mb-2">Send us a Message</h3>
@@ -149,7 +149,7 @@ export default function Contact() {
                 </form>
               </div>
 
-              {/* Additional Info */}
+              
               <div className="mt-6 grid md:grid-cols-2 gap-4 text-sm text-beige/60">
                 <div className="text-center p-4 bg-dark-elev/50 rounded-xl border border-beige/10">
                   <div className="text-amber-500 font-semibold mb-1">Quick Response</div>

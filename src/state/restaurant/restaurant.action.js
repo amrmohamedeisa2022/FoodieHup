@@ -1,4 +1,4 @@
-// src/state/restaurant/restaurant.action.js
+
 import api from "../../api/api";
 import {
   setUsersRestaurant,
@@ -6,12 +6,6 @@ import {
   addCategory,
   toggleRestaurantStatus,
 } from "./restaurant.reducer";
-
-/* ===========================
-   Restaurants
-=========================== */
-
-// ✅ Get all restaurants (User side)
 export const fetchAllRestaurants = () => async (dispatch) => {
   try {
     const res = await api.get("/api/restaurants");
@@ -20,17 +14,11 @@ export const fetchAllRestaurants = () => async (dispatch) => {
     console.error("fetchAllRestaurants error", e);
   }
 };
-
-/* ===========================
-   Categories
-=========================== */
-
-// ✅ Create Food Category (Admin)
 export const createCategoryAction =
   ({ reqData }) =>
   async (dispatch) => {
     try {
-      // Backend endpoint
+      
       const res = await api.post(
         "/api/admin/category",
         reqData
@@ -42,9 +30,6 @@ export const createCategoryAction =
     }
   };
 
-/* ===========================
-   Restaurant Status
-=========================== */
 
 export const updateRestaurantStatus =
   ({ restaurantId }) =>

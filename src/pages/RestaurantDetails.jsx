@@ -66,7 +66,7 @@ export default function RestaurantDetails() {
     );
   }
 
-  // ✅ Closed Restaurant UI
+  
   if (!restaurant.open) {
     return (
       <>
@@ -114,7 +114,7 @@ export default function RestaurantDetails() {
       <Navbar />
       <section className="min-h-screen bg-gradient-to-b from-dark-primary to-dark-elev py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          {/* Restaurant Header */}
+          
           <div className="mb-12">
             <button 
               onClick={() => navigate("/restaurants")}
@@ -155,7 +155,7 @@ export default function RestaurantDetails() {
             </div>
           </div>
 
-          {/* Search & Filter */}
+          
           <div className="flex flex-col lg:flex-row gap-4 mb-12">
             <div className="flex-1 relative">
               <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-beige/60 text-xl" />
@@ -183,7 +183,7 @@ export default function RestaurantDetails() {
             </div>
           </div>
 
-          {/* Results Info */}
+          
           <div className="mb-8">
             <p className="text-beige/60">
               {filteredMeals.length === 0 
@@ -195,7 +195,7 @@ export default function RestaurantDetails() {
             </p>
           </div>
 
-          {/* Meals Grid */}
+          
           {filteredMeals.length === 0 ? (
             <div className="text-center py-16">
               <div className="w-24 h-24 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
