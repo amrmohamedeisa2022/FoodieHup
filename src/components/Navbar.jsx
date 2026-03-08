@@ -111,7 +111,7 @@ export default function Navbar() {
           <nav className="hidden lg:flex gap-6 text-beige/90 font-medium">
             <Link to="/" className="hover:text-gold">Home</Link>
             <Link to="/restaurants" className="hover:text-gold">Restaurants</Link>
-            <Link to="/menu" className="hover:text-gold">Menu</Link>
+            {/* تم إزالة رابط الـ Menu من هنا */}
             <Link to="/about" className="hover:text-gold">About</Link>
             <Link to="/contact" className="hover:text-gold">Contact</Link>
           </nav>

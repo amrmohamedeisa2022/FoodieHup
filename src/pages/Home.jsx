@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import Menu from "./Menu";
+// import Menu from "./Menu"; // عملنا تعليق للاستيراد ده
 import About from "./About";
 import Contact from "./Contact";
 import Footer from "../components/Footer";
@@ -15,7 +15,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <main className="pt-6 space-y-20">
-        <Menu hideNavbar={true} />
+        {/* <Menu hideNavbar={true} /> */} {/* عملنا تعليق للسطر ده عشان ميظهرش المنيو */}
         <About />
         <Contact />
       </main>

@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import Menu from "./pages/Menu";
+// import Menu from "./pages/Menu"; // تم تعطيل الاستيراد
 import MealDetails from "./pages/MealDetails";
 import CartPage from "./pages/CartPage";
 import Checkout from "./pages/Checkout";
@@ -29,7 +29,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/menu" element={<Menu />} />
+      {/* <Route path="/menu" element={<Menu />} /> */} {/* تم تعطيل المسار */}
       <Route path="/meal/:id" element={<MealDetails />} />
       <Route path="/cart" element={<CartPage />} />
       <Route path="/checkout" element={<Checkout />} />

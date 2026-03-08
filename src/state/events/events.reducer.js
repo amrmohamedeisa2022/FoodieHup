@@ -13,7 +13,7 @@ const eventsSlice = createSlice({
     },
 
     addEvent: (state, action) => {
-      state.events = [action.payload, ...state.events]; // ✅ الجديد فوق
+      state.events = [action.payload, ...state.events]; 
     },
 
     deleteEvent: (state, action) => {

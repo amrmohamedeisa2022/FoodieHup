@@ -58,20 +58,12 @@ if (res.role === "ROLE_RESTAURANT_OWNER") {
   }
 
 } else {
-<<<<<<< HEAD
   navigate("/");    
-=======
-  
-  navigate("/");
->>>>>>> 98eb8529e22799c817e53058e8526062a27ca9dc
 }
 
 
 
-
-
 console.log("HAS RESTAURANT =", res.hasRestaurant);
-
 
 
   setIsLoading(false);
