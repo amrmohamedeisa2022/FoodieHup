@@ -62,9 +62,8 @@ if (res.role === "ROLE_RESTAURANT_OWNER") {
 }
 
 
-
 console.log("HAS RESTAURANT =", res.hasRestaurant);
-
+console.log("LOGIN RESPONSE:", res);
 
   setIsLoading(false);
 }
@@ -83,7 +82,7 @@ console.log("HAS RESTAURANT =", res.hasRestaurant);
     >
       <div className="bg-dark-elev/95 p-8 rounded-2xl w-full max-w-md shadow-2xl border border-beige/10">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gold">QuickEats</h1>
+          <h1 className="text-3xl font-bold text-gold">FoodyGo</h1>
           <h2 className="text-xl font-semibold text-beige mt-2">Welcome Back</h2>
           <p className="text-beige/70 text-sm">Login to continue</p>
         </div>

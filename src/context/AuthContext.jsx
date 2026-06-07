@@ -54,17 +54,17 @@ async function login({ email, password }) {
 
     const token = res.data?.jwt;
 
-    if (!token) {
-      return { success: false, message: "Login failed" };
-    }
-
     localStorage.setItem("quickeats_token", token);
 
     const userData = {
       name: res.data?.fullName,
       email,
       role: res.data?.role,
+      restaurantId: res.data?.restaurantId,
     };
+
+    // ✅ المهم
+    localStorage.setItem("restaurantId", res.data?.restaurantId);
 
     setUser(userData);
 
@@ -72,19 +72,13 @@ async function login({ email, password }) {
       success: true,
       role: res.data?.role,
       hasRestaurant: res.data?.hasRestaurant,
+      restaurantId: res.data?.restaurantId, // 🔥 ضيف دي
     };
 
   } catch (e) {
-    return {
-      success: false,
-      message:
-        e?.response?.data?.message ||
-        e?.message ||
-        "Login failed",
-    };
+    return { success: false };
   }
 }
-
 
 
 

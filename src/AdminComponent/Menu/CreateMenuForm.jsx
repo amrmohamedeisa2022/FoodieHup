@@ -7,14 +7,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Button,
-  Chip,
   CircularProgress,
   FormControl,
   Grid,
   IconButton,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Select,
   TextField,
   Typography,
@@ -23,7 +21,6 @@ import {
 import { uploadImageToCloudinary } from "../util/UploadToCloudaniry";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 
 import { createMenuItem } from "../../state/menu/menu.action";
 
@@ -34,7 +31,6 @@ const initialValues = {
   category: "",
   vegetarian: true,
   seasonal: false,
-  ingredients: [],
   images: [],
 };
 
@@ -43,7 +39,6 @@ export default function CreateMenuForm() {
   const navigate = useNavigate();
 
   const restaurant = useSelector((store) => store.restaurant);
-  const ingredients = useSelector((store) => store.ingredients);
 
   const [uploadImage, setUploadImage] = useState(false);
 
@@ -57,17 +52,26 @@ export default function CreateMenuForm() {
         return;
       }
 
-      const menu = {
-        ...values,
-        price: Number(values.price) || 0,
-        category: values.category ? { name: values.category } : { name: "Food" },
-        restaurantId,
-        available: true,
-      };
+    const menu = {
+  name: values.name,
+  description: values.description,
+  price: Number(values.price) || 0,
+
+  category: {
+    id: values.category, // ✅ مهم
+  },
+
+  restaurantId: restaurantId,
+  images: values.images,
+
+  vegetarain: values.vegetarian,
+  seassional: values.seasonal,
+};
+
+      console.log("SENDING MENU:", menu);
 
       await dispatch(createMenuItem({ menu }));
 
-      
       navigate("/admin/restaurants/menu");
     },
   });
@@ -94,9 +98,39 @@ export default function CreateMenuForm() {
     formik.setFieldValue("images", updatedImages);
   };
 
+  const textFieldStyle = {
+    InputLabelProps: { style: { color: "#aaa" } },
+    InputProps: { style: { color: "white" } },
+    sx: {
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+          borderColor: "rgba(255,255,255,0.2)",
+        },
+        "&:hover fieldset": {
+          borderColor: "white",
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: "#ef4444",
+        },
+      },
+    },
+  };
+
+  const selectStyle = {
+    color: "white",
+    ".MuiOutlinedInput-notchedOutline": {
+      borderColor: "rgba(255,255,255,0.2)",
+    },
+    "&:hover .MuiOutlinedInput-notchedOutline": {
+      borderColor: "white",
+    },
+    "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "#ef4444",
+    },
+  };
+
   return (
     <div className="min-h-screen bg-black text-white flex justify-center px-4 py-10">
-      
       <div className="w-full max-w-5xl">
         <Typography
           variant="h5"
@@ -110,7 +144,6 @@ export default function CreateMenuForm() {
           Add New Menu Item
         </Typography>
 
-        
         <Box
           sx={{
             background: "#0f0f0f",
@@ -123,17 +156,9 @@ export default function CreateMenuForm() {
         >
           <form onSubmit={formik.handleSubmit}>
             <Grid container spacing={3}>
-              
-              <Grid
-                item
-                xs={12}
-                sx={{
-                  display: "flex",
-                  gap: 2,
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                }}
-              >
+
+              {/* Image Upload */}
+              <Grid item xs={12} sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
                 <input
                   accept="image/*"
                   id="fileInput"
@@ -142,192 +167,103 @@ export default function CreateMenuForm() {
                   type="file"
                 />
 
-                <label htmlFor="fileInput" style={{ position: "relative" }}>
-                  <Box
-                    sx={{
-                      width: 95,
-                      height: 95,
-                      borderRadius: "12px",
-                      border: "1px solid rgba(255,255,255,0.12)",
-                      background: "#111",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      cursor: "pointer",
-                    }}
-                  >
+                <label htmlFor="fileInput">
+                  <Box sx={{
+                    width: 95,
+                    height: 95,
+                    borderRadius: "12px",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    background: "#111",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    cursor: "pointer",
+                  }}>
                     <AddPhotoAlternateIcon sx={{ color: "white" }} />
                   </Box>
-
-                  {uploadImage && (
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        inset: 0,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <CircularProgress size={28} />
-                    </Box>
-                  )}
                 </label>
 
-               
-                <Box sx={{ display: "flex", gap: 1.2, flexWrap: "wrap" }}>
-                  {formik.values.images.map((img, index) => (
-                    <Box key={index} sx={{ position: "relative" }}>
-                      <Box
-                        component="img"
-                        src={img}
-                        alt="preview"
-                        sx={{
-                          width: 95,
-                          height: 95,
-                          borderRadius: "12px",
-                          objectFit: "cover",
-                          border: "1px solid rgba(255,255,255,0.12)",
-                        }}
-                      />
+                {uploadImage && <CircularProgress size={28} />}
 
-                      <IconButton
-                        size="small"
-                        onClick={() => handleRemoveImage(index)}
-                        sx={{
-                          position: "absolute",
-                          top: -10,
-                          right: -10,
-                          background: "white",
-                          "&:hover": { background: "#ddd" },
-                        }}
-                      >
-                        <CloseIcon sx={{ fontSize: 14, color: "black" }} />
-                      </IconButton>
-                    </Box>
-                  ))}
-                </Box>
+                {formik.values.images.map((img, index) => (
+                  <Box key={index} sx={{ position: "relative" }}>
+                    <img src={img} alt="" style={{
+                      width: 95,
+                      height: 95,
+                      borderRadius: 12,
+                      objectFit: "cover",
+                    }} />
+                    <IconButton
+                      size="small"
+                      onClick={() => handleRemoveImage(index)}
+                      sx={{
+                        position: "absolute",
+                        top: -10,
+                        right: -10,
+                        background: "white",
+                      }}
+                    >
+                      <CloseIcon sx={{ fontSize: 14, color: "black" }} />
+                    </IconButton>
+                  </Box>
+                ))}
               </Grid>
 
-              
+              {/* Name */}
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="name"
-                  name="name"
-                  label="Name"
-                  variant="outlined"
+                <TextField fullWidth name="name" label="Name"
                   onChange={formik.handleChange}
                   value={formik.values.name}
-                  sx={fieldStyle}
+                  {...textFieldStyle}
                 />
               </Grid>
 
-            
+              {/* Description */}
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="description"
-                  name="description"
-                  label="Description"
-                  variant="outlined"
+                <TextField fullWidth name="description" label="Description"
                   onChange={formik.handleChange}
                   value={formik.values.description}
-                  sx={fieldStyle}
+                  {...textFieldStyle}
                 />
               </Grid>
 
+              {/* Price */}
               <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  id="price"
-                  name="price"
-                  label="Price"
-                  variant="outlined"
+                <TextField fullWidth name="price" label="Price"
                   onChange={formik.handleChange}
                   value={formik.values.price}
-                  sx={fieldStyle}
+                  {...textFieldStyle}
                 />
               </Grid>
 
+              {/* Category */}
               <Grid item xs={12} md={6}>
-                <FormControl fullWidth sx={selectStyle}>
-                  <InputLabel>Food Category</InputLabel>
+                <FormControl fullWidth>
+                  <InputLabel sx={{ color: "#aaa" }}>Category</InputLabel>
                   <Select
-                    value={formik.values.category}
-                    label="Food Category"
-                    onChange={formik.handleChange}
                     name="category"
+                    value={formik.values.category}
+                    onChange={formik.handleChange}
+                    sx={selectStyle}
                   >
                     {(restaurant?.categories || []).map((item) => (
-                      <MenuItem key={item.id} value={item.name}>
-                        {item.name}
-                      </MenuItem>
+                      <MenuItem key={item.id} value={item.id}>
+  {item.name}
+ </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
               </Grid>
 
-              
-              <Grid item xs={12}>
-                <FormControl fullWidth sx={selectStyle}>
-                  <InputLabel>Ingredients</InputLabel>
-                  <Select
-                    multiple
-                    name="ingredients"
-                    value={formik.values.ingredients}
-                    onChange={formik.handleChange}
-                    input={<OutlinedInput label="Ingredients" />}
-                    renderValue={(selected) => (
-                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8 }}>
-                        {selected.map((value, idx) => (
-                          <Chip
-                            key={idx}
-                            label={value?.name || value}
-                            size="small"
-                            sx={{
-                              background: "rgba(255,255,255,0.08)",
-                              color: "white",
-                              border: "1px solid rgba(255,255,255,0.1)",
-                            }}
-                          />
-                        ))}
-                      </Box>
-                    )}
-                  >
-                    {(ingredients?.ingredients || []).map((item) => (
-                      <MenuItem key={item.id} value={item}>
-                        {item.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              
+              {/* Vegetarian */}
               <Grid item xs={12} md={6}>
-                <FormControl fullWidth sx={selectStyle}>
-                  <InputLabel>Is Vegetarian</InputLabel>
+                <FormControl fullWidth>
+                  <InputLabel sx={{ color: "#aaa" }}>Vegetarian</InputLabel>
                   <Select
-                    value={formik.values.vegetarian}
-                    label="Is Vegetarian"
-                    onChange={formik.handleChange}
                     name="vegetarian"
-                  >
-                    <MenuItem value={true}>Yes</MenuItem>
-                    <MenuItem value={false}>No</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <FormControl fullWidth sx={selectStyle}>
-                  <InputLabel>Is Seasonal</InputLabel>
-                  <Select
-                    value={formik.values.seasonal}
-                    label="Is Seasonal"
+                    value={formik.values.vegetarian}
                     onChange={formik.handleChange}
-                    name="seasonal"
+                    sx={selectStyle}
                   >
                     <MenuItem value={true}>Yes</MenuItem>
                     <MenuItem value={false}>No</MenuItem>
@@ -335,25 +271,29 @@ export default function CreateMenuForm() {
                 </FormControl>
               </Grid>
 
-              
+              {/* Seasonal */}
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  <InputLabel sx={{ color: "#aaa" }}>Seasonal</InputLabel>
+                  <Select
+                    name="seasonal"
+                    value={formik.values.seasonal}
+                    onChange={formik.handleChange}
+                    sx={selectStyle}
+                  >
+                    <MenuItem value={true}>Yes</MenuItem>
+                    <MenuItem value={false}>No</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              {/* Submit */}
               <Grid item xs={12}>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  sx={{
-                    mt: 1,
-                    background: "#e11d48",
-                    color: "white",
-                    fontWeight: "bold",
-                    px: 4,
-                    py: 1.4,
-                    borderRadius: "10px",
-                    "&:hover": { background: "#be123c" },
-                  }}
-                >
+                <Button type="submit" variant="contained" color="error">
                   CREATE MENU ITEM
                 </Button>
               </Grid>
+
             </Grid>
           </form>
         </Box>
@@ -361,47 +301,3 @@ export default function CreateMenuForm() {
     </div>
   );
 }
-
-
-const fieldStyle = {
-  "& .MuiOutlinedInput-root": {
-    background: "#111",
-    color: "white",
-    borderRadius: "10px",
-    "& fieldset": { borderColor: "rgba(255,255,255,0.16)" },
-    "&:hover fieldset": { borderColor: "rgba(255,255,255,0.30)" },
-    "&.Mui-focused fieldset": {
-      borderColor: "#e11d48",
-      borderWidth: "2px",
-    },
-  },
-  "& .MuiInputLabel-root": {
-    color: "rgba(255,255,255,0.65)",
-  },
-  "& .MuiInputLabel-root.Mui-focused": {
-    color: "#e11d48",
-  },
-};
-
-const selectStyle = {
-  "& .MuiOutlinedInput-root": {
-    background: "#111",
-    color: "white",
-    borderRadius: "10px",
-    "& fieldset": { borderColor: "rgba(255,255,255,0.16)" },
-    "&:hover fieldset": { borderColor: "rgba(255,255,255,0.30)" },
-    "&.Mui-focused fieldset": {
-      borderColor: "#e11d48",
-      borderWidth: "2px",
-    },
-  },
-  "& .MuiInputLabel-root": {
-    color: "rgba(255,255,255,0.65)",
-  },
-  "& .MuiInputLabel-root.Mui-focused": {
-    color: "#e11d48",
-  },
-  "& .MuiSvgIcon-root": {
-    color: "rgba(255,255,255,0.75)",
-  },
-};

@@ -14,11 +14,14 @@ import Contact from "./pages/Contact";
 import Favorites from "./pages/Favorites";
 import Profile from "./pages/Profile";
 import Error404 from "./pages/Error404";
-
+import RestaurantMenu from "./pages/RestaurantMenu";
+import OrderSuccess from "./pages/OrderSuccess";
 import VerifySignupOTP from "./pages/VerifySignupOTP";
 import ForgotPassword from "./pages/ForgotPassword";
 import VerifyResetOTP from "./pages/VerifyResetOTP";
 import ResetPassword from "./pages/ResetPassword";
+import TrackOrder from "./pages/TrackOrder";
+  import MyOrders from "./pages/MyOrders";
 
 import Restaurants from "./pages/Restaurants";   // ⭐ added
 
@@ -40,6 +43,13 @@ export default function AppRoutes() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/favorites" element={<Favorites />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/restaurant/:id" element={<RestaurantMenu />} />
+      <Route path="/order-success" element={<OrderSuccess />} />
+      <Route path="/track-order" element={<TrackOrder />} />
+    
+
+<Route path="/my-orders" element={<MyOrders />} />
+
 
       
       <Route path="/restaurants" element={<Restaurants />} />

@@ -4,7 +4,6 @@ import {
   Box,
   Card,
   CardHeader,
-  Chip,
   IconButton,
   Paper,
   Table,
@@ -22,10 +21,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-
 import {
   deleteFoodAction,
   getMenuItemsByRestaurantId,
+  toggleFoodAvailability, // ✅ مهم
 } from "../../state/menu/menu.action";
 
 export default function MenuTable() {
@@ -35,7 +34,6 @@ export default function MenuTable() {
   const restaurant = useSelector((store) => store.restaurant);
   const menu = useSelector((store) => store.menu);
 
-  
   useEffect(() => {
     const restaurantId = restaurant?.usersRestaurant?.id;
     if (!restaurantId) return;
@@ -45,6 +43,10 @@ export default function MenuTable() {
 
   const handleDeleteFood = (foodId) => {
     dispatch(deleteFoodAction({ foodId }));
+  };
+
+  const handleToggleAvailability = (foodId) => {
+    dispatch(toggleFoodAvailability({ foodId }));
   };
 
   const items = menu?.menuItems || [];
@@ -70,7 +72,6 @@ export default function MenuTable() {
           action={
             <IconButton
               onClick={() => navigate("/admin/restaurants/add-menu")}
-              aria-label="add menu"
               sx={{
                 color: "white",
                 background: "rgba(255,255,255,0.06)",
@@ -91,15 +92,12 @@ export default function MenuTable() {
             borderTop: "1px solid rgba(255,255,255,0.06)",
           }}
         >
-          <Table sx={{ minWidth: 650 }}>
+          <Table>
             <TableHead>
               <TableRow>
                 <TableCell sx={thStyle}>Image</TableCell>
                 <TableCell sx={thStyle} align="right">
                   Title
-                </TableCell>
-                <TableCell sx={thStyle} align="right">
-                  Ingredients
                 </TableCell>
                 <TableCell sx={thStyle} align="right">
                   Price
@@ -127,6 +125,7 @@ export default function MenuTable() {
                     },
                   }}
                 >
+                  {/* IMAGE */}
                   <TableCell>
                     <Avatar
                       src={item.images?.[0] || ""}
@@ -139,32 +138,22 @@ export default function MenuTable() {
                     />
                   </TableCell>
 
+                  {/* NAME */}
                   <TableCell align="right" sx={{ fontWeight: 600 }}>
                     {item.name}
                   </TableCell>
 
+                  {/* PRICE */}
                   <TableCell align="right">
-                    <div className="flex flex-wrap gap-1 justify-end">
-                      {(item.ingredients || []).map((ingredient, idx) => (
-                        <Chip
-                          key={ingredient.id || ingredient.name || idx}
-                          label={ingredient.name || ingredient}
-                          size="small"
-                          sx={{
-                            background: "rgba(255,255,255,0.06)",
-                            color: "rgba(255,255,255,0.85)",
-                            border: "1px solid rgba(255,255,255,0.08)",
-                          }}
-                        />
-                      ))}
-                    </div>
+                   {item.price} EGP
                   </TableCell>
 
-                  <TableCell align="right">£{item.price}</TableCell>
-
+                  {/* AVAILABILITY */}
                   <TableCell align="right">
                     <span
+                      onClick={() => handleToggleAvailability(item.id)}
                       style={{
+                        cursor: "pointer",
                         padding: "6px 10px",
                         borderRadius: "999px",
                         fontSize: "12px",
@@ -182,6 +171,7 @@ export default function MenuTable() {
                     </span>
                   </TableCell>
 
+                  {/* DELETE */}
                   <TableCell align="right">
                     <IconButton
                       onClick={() => handleDeleteFood(item.id)}
@@ -198,9 +188,10 @@ export default function MenuTable() {
                 </TableRow>
               ))}
 
+              {/* EMPTY */}
               {items.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={6} align="center" sx={{ py: 6 }}>
+                  <TableCell colSpan={5} align="center" sx={{ py: 6 }}>
                     <Typography sx={{ color: "rgba(255,255,255,0.7)" }}>
                       No menu items found
                     </Typography>

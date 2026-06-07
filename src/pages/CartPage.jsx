@@ -13,8 +13,8 @@ export default function CartPage(){
   };
 
   const handleContinueShopping = () => {
-    navigate("/menu");
-  };
+  navigate(`/restaurant/${items[0]?.restaurantId}`);
+};
 
   
   const calculateItemTotal = (price, quantity) => {
@@ -71,7 +71,7 @@ export default function CartPage(){
                     <div className="flex gap-6">
                       
                       <img 
-                        src={it.image} 
+                        src={it.images?.[0]}
                         className="w-20 h-20 md:w-24 md:h-24 object-cover rounded-xl flex-shrink-0" 
                         alt={it.name}
                         onError={(e) => {
@@ -99,7 +99,7 @@ export default function CartPage(){
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
                             <button 
-                              onClick={() => updateQty(it.id, Math.max(1, it.qty - 1))} 
+                              onClick={() => updateQty(it.cartItemId, Math.max(1, it.qty - 1))}
                               className="w-10 h-10 bg-dark-primary border border-beige/20 rounded-lg flex items-center justify-center text-beige hover:bg-amber-500 hover:text-white hover:border-amber-500 transition-all duration-200"
                             >
                               <FiMinus className="text-sm" />
@@ -108,7 +108,7 @@ export default function CartPage(){
                               {it.qty}
                             </div>
                             <button 
-                              onClick={() => updateQty(it.id, it.qty + 1)} 
+                             onClick={() => updateQty(it.cartItemId, it.qty + 1)} 
                               className="w-10 h-10 bg-dark-primary border border-beige/20 rounded-lg flex items-center justify-center text-beige hover:bg-amber-500 hover:text-white hover:border-amber-500 transition-all duration-200"
                             >
                               <FiPlus className="text-sm" />

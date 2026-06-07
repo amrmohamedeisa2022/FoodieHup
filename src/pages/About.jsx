@@ -10,7 +10,7 @@ export default function About() {
         <div className="max-w-7xl mx-auto">
           
           <div className="text-center mb-16">
-            <h1 className="text-5xl font-bold text-gold mb-6">About QuickEats</h1>
+            <h1 className="text-5xl font-bold text-gold mb-6">About FoodyGo</h1>
             <p className="text-beige/70 text-xl max-w-3xl mx-auto leading-relaxed">
               Delivering culinary excellence straight to your doorstep. Our passion for food
               and commitment to quality make every meal an unforgettable experience.
@@ -26,7 +26,7 @@ export default function About() {
                   We Cook with Passion
                 </h2>
                 <p className="text-beige/90 text-lg leading-relaxed mb-6">
-                  At QuickEats, we believe great meals start with great care — from sourcing
+                  At FoodyGo, we believe great meals start with great care — from sourcing
                   the freshest ingredients to our team of expert chefs who pour their heart
                   into every dish.
                 </p>

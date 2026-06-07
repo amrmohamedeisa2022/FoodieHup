@@ -15,18 +15,46 @@ export const fetchAllRestaurants = () => async (dispatch) => {
   }
 };
 export const createCategoryAction =
-  ({ reqData }) =>
+  ({ reqData, jwt }) =>
   async (dispatch) => {
     try {
-      
       const res = await api.post(
         "/api/admin/category",
-        reqData
+        reqData,
+        {
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+          },
+        }
       );
 
+      // ممكن تخليها أو تشيلها
       dispatch(addCategory(res.data));
+
+      // 🔥 الأهم
+      dispatch(getRestaurantCategories(jwt));
+
     } catch (e) {
       console.error("createCategoryAction error", e);
+    }
+  };
+
+  export const getRestaurantCategories =
+  (jwt) => async (dispatch) => {
+    try {
+      const res = await api.get("/api/admin/category/restaurant", {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      });
+
+      dispatch({
+        type: "SET_CATEGORIES",
+        payload: res.data,
+      });
+
+    } catch (e) {
+      console.log("GET CATEGORY ERROR:", e);
     }
   };
 

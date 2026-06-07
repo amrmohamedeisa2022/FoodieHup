@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  orders: [], 
+  orders: [],
 };
 
 const orderSlice = createSlice({
@@ -9,6 +9,7 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     setOrders: (state, action) => {
+      console.log("REDUCER HIT:", action.payload); // 👈 هنا الصح
       state.orders = action.payload || [];
     },
 

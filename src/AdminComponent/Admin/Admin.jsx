@@ -6,7 +6,6 @@ import { RestaurantDashboard } from "../Dashboard/Dashboard";
 import { Orders } from "../Orders/Orders";
 import { Menu } from "../Menu/Menu";
 import { FoodCategory } from "../FoodCategory/FoodCategory";
-import Ingrediants from "../Ingrediants/Ingrediants";
 
 import { Events } from "./Events/Events";
 import { Details } from "./Details/Details";
@@ -20,26 +19,18 @@ import { useSelector } from "react-redux";
 export default function Admin() {
 
   const location = useLocation();
-const restaurantState = useSelector((store) => store.restaurant);
+  const restaurantState = useSelector((store) => store.restaurant);
 
-const loadingRestaurant = restaurantState.loading;
-const hasRestaurant = !!restaurantState.usersRestaurant;
+  const loadingRestaurant = restaurantState.loading;
+  const hasRestaurant = !!restaurantState.usersRestaurant;
 
-if (loadingRestaurant) {
-  return <div className="text-white p-10">Loading...</div>;
-}
+  if (loadingRestaurant) {
+    return <div className="text-white p-10">Loading...</div>;
+  }
 
-if (hasRestaurant && location.pathname === "/admin/restaurants/create") {
-  return <Navigate to="/admin/restaurants" replace />;
-}
-
-
-
-
-console.log("redux usersRestaurant:", restaurantState.usersRestaurant);
-
-
-
+  if (hasRestaurant && location.pathname === "/admin/restaurants/create") {
+    return <Navigate to="/admin/restaurants" replace />;
+  }
 
   const isCreatePage = location.pathname === "/admin/restaurants/create";
 
@@ -71,7 +62,9 @@ console.log("redux usersRestaurant:", restaurantState.usersRestaurant);
             <Route path="restaurants/menu" element={<Menu />} />
             <Route path="restaurants/add-menu" element={<CreateMenuForm />} />
             <Route path="restaurants/category" element={<FoodCategory />} />
-            <Route path="restaurants/ingredients" element={<Ingrediants />} />
+
+            {/* ❌ شيلنا ingredients */}
+
             <Route path="restaurants/event" element={<Events />} />
             <Route path="restaurants/details" element={<Details />} />
             <Route path="restaurants/restaurant-details" element={<RestaurantDetails />} />

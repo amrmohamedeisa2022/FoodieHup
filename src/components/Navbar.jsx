@@ -105,12 +105,13 @@ export default function Navbar() {
             <div className="w-8 h-8 bg-gradient-to-r from-amber-500 to-orange-500 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">Q</span>
             </div>
-            QuickEats
+            FoodyGo
           </Link>
 
           <nav className="hidden lg:flex gap-6 text-beige/90 font-medium">
             <Link to="/" className="hover:text-gold">Home</Link>
             <Link to="/restaurants" className="hover:text-gold">Restaurants</Link>
+             <Link to="/my-orders" className="hover:text-gold">My Orders</Link>
             {/* تم إزالة رابط الـ Menu من هنا */}
             <Link to="/about" className="hover:text-gold">About</Link>
             <Link to="/contact" className="hover:text-gold">Contact</Link>

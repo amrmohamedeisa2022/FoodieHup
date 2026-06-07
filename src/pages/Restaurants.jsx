@@ -22,7 +22,7 @@ export default function Restaurants() {
         <div className="max-w-7xl mx-auto">
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {restaurants.map((r) => (
+            {restaurants?.map((r) => (
               <div
                 key={r.id}
                 className="bg-dark-elev rounded-2xl overflow-hidden border border-beige/10"

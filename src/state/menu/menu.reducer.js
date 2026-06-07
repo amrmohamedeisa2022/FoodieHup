@@ -18,6 +18,8 @@ const initialState = {
   menuItems: [],
 };
 
+
+
 export const menuReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_MENU_ITEMS_REQUEST:
@@ -42,6 +44,14 @@ export const menuReducer = (state = initialState, action) => {
         loading: false,
         menuItems: [action.payload, ...state.menuItems],
       };
+
+      case "TOGGLE_AVAILABILITY_SUCCESS":
+  return {
+    ...state,
+    menuItems: state.menuItems.map((item) =>
+      item.id === action.payload.id ? action.payload : item
+    ),
+  };
 
     case GET_MENU_ITEMS_REQUEST_FAILURE:
     case DELETE_MENU_ITEM_FAILURE:

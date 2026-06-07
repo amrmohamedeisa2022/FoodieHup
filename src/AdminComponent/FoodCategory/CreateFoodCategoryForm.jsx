@@ -1,7 +1,6 @@
 import { Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { createCategoryAction } from "../../state/restaurant/restaurant.action";
 
 export default function CreateFoodCategoryForm({ onClose }) {
@@ -27,18 +26,19 @@ export default function CreateFoodCategoryForm({ onClose }) {
 
     const data = {
       name: formData.categoryName.trim(),
-      restaurantId: { id: restaurantId },
     };
 
-    dispatch(
-      createCategoryAction({
-        reqData: data,
-        jwt: localStorage.getItem("jwt"),
-      })
-    );
+dispatch(
+  createCategoryAction({
+    reqData: data,
+    jwt: localStorage.getItem("quickeats_token"),
+  })
+);
+   
 
-    
+    // 🔥 reset
     setFormData({ categoryName: "" });
+
     if (onClose) onClose();
   };
 
@@ -108,7 +108,6 @@ export default function CreateFoodCategoryForm({ onClose }) {
     </div>
   );
 }
-
 
 const darkFieldStyle = {
   "& .MuiOutlinedInput-root": {

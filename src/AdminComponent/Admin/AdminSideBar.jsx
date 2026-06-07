@@ -30,7 +30,6 @@ const menu = [
   { title: "Orders", icon: <ShoppingBagIcon />, path: "/restaurants/orders" },
   { title: "Menu", icon: <ShopTwoIcon />, path: "/restaurants/menu" },
   { title: "Food Category", icon: <CategoryIcon />, path: "/restaurants/category" },
-  { title: "Ingredients", icon: <FastfoodIcon />, path: "/restaurants/ingredients" },
   { title: "Events", icon: <EventIcon />, path: "/restaurants/event" },
   { title: "Details", icon: <AdminPanelSettingsIcon />, path: "/restaurants/details" },
   { title: "Logout", icon: <LogoutIcon />, path: "/" },

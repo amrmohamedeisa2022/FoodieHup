@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getRestaurantCategories } from "../../state/restaurant/restaurant.action";
+
 import {
   Box,
   Card,
@@ -16,10 +19,9 @@ import {
 } from "@mui/material";
 
 import CreateIcon from "@mui/icons-material/Create";
-
-import { useSelector } from "react-redux";
 import CreateFoodCategoryForm from "./CreateFoodCategoryForm";
 
+console.log("COMPONENT RENDERED");
 const modalStyle = {
   position: "absolute",
   top: "50%",
@@ -35,13 +37,30 @@ const modalStyle = {
 };
 
 export default function FoodCategoryTable() {
+  const dispatch = useDispatch();
   const restaurant = useSelector((store) => store.restaurant);
 
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const categories = restaurant?.categories || [];
+
+useEffect(() => {
+  const jwt = localStorage.getItem("quickeats_token");
+
+  console.log("JWT VALUE 👉", jwt);
+
+  if (!jwt) {
+    console.log("❌ NO TOKEN FOUND");
+    return;
+  }
+
+  console.log("✅ DISPATCHING...");
+  dispatch(getRestaurantCategories(jwt));
+
+}, [dispatch]);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box>
@@ -95,7 +114,7 @@ export default function FoodCategoryTable() {
             <TableBody>
               {categories.map((item, index) => (
                 <TableRow
-                  key={item.id || item.name + index}
+                  key={item.id || index}
                   sx={{
                     "& td": {
                       borderColor: "rgba(255,255,255,0.06)",
@@ -105,7 +124,9 @@ export default function FoodCategoryTable() {
                   }}
                 >
                   <TableCell>{index + 1}</TableCell>
-                  <TableCell sx={{ fontWeight: 600 }}>{item.name}</TableCell>
+                  <TableCell sx={{ fontWeight: 600 }}>
+                    {item.name}
+                  </TableCell>
                 </TableRow>
               ))}
 
@@ -123,7 +144,7 @@ export default function FoodCategoryTable() {
         </TableContainer>
       </Card>
 
-     
+      {/* 🔥 Modal */}
       <Modal open={open} onClose={handleClose}>
         <Box sx={modalStyle}>
           <CreateFoodCategoryForm onClose={handleClose} />

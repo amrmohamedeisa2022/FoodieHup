@@ -53,7 +53,7 @@ export default function Signup() {
       <div className="bg-dark-elev/95 p-8 rounded-2xl w-full max-w-md shadow-2xl border border-beige/10">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gold mb-2">Create Account</h1>
-          <p className="text-beige/70 text-sm">Join QuickEats today</p>
+          <p className="text-beige/70 text-sm">Join FoodyGo today</p>
         </div>
 
         <form className="space-y-6" onSubmit={onSubmit}>
