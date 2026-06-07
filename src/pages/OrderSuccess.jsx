@@ -58,7 +58,7 @@ export default function OrderSuccess() {
           Your order has been received and is being prepared.
         </p>
 
-        {/* 🔥 Track Order Box */}
+        {/* 🔥 Track Order Box jh */}
         <div
           onClick={() => navigate("/track-order")}
           className="mb-4 cursor-pointer bg-gradient-to-r from-blue-600 to-indigo-600 p-4 rounded-xl flex items-center justify-between hover:opacity-90 transition"
